@@ -12,7 +12,7 @@ function Preturi() {
 
   const fetchCoaforPrices = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/preturi/coafor');
+      const response = await fetch('https://estyllo.onrender.com/api/preturi/coafor');
       const data = await response.json();
       setPricesCoafor(data);
     } catch (error) {
