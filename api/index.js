@@ -6,25 +6,39 @@ import cors from 'cors';
 import preturiRouter from "./routes/preturi.routes.js";
 import programariRouter from "./routes/programari.route.js";
 import path from "path"
+import dotenv from 'dotenv';
 const app = express();
-
+dotenv.config();
 app.listen(3000, () => {
     console.log("Server is running on port 3000!!!")
 });
 
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "estyllo"
+// const db = mysql.createConnection({
+//     host: "localhost",
+//     user: "root",
+//     password: "",
+//     database: "estyllo"
+// });
+// db.connect((err) => {
+//     if (err) {
+//         console.error("Error connecting to the database:", err.message);
+//         return;
+//     }
+//     console.log("Connected to the estyllo database");
+// });
+
+const db = mysql.createPool({
+    host: process.env.DB_HOST, 
+    user: process.env.DB_USERNAME, 
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DBNAME,
+    waitForConnections: true,
 });
-db.connect((err) => {
-    if (err) {
-        console.error("Error connecting to the database:", err.message);
-        return;
-    }
-    console.log("Connected to the estyllo database");
-});
+
+db.getConnection((err, conn) => {
+    if(err) console.log(err)
+    console.log("Connected successfully")
+})
 
 const __dirname = path.resolve()
 app.set('db', db);
@@ -55,5 +69,4 @@ app.use("/api/preturi", preturiRouter);
 app.use("/api/appointments", programariRouter);
 
 
-
-// "build": "react-scripts build"
+// "build": "npm install && npm install --prefix client && npm run build --prefix client"
