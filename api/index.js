@@ -53,3 +53,6 @@ app.use("/api/personal", personalRouter);
 app.use("/api/reviews", reviewsRouter);
 app.use("/api/preturi", preturiRouter);
 app.use("/api/appointments", programariRouter);
+
+
+// "build": "npm install && npm install --prefix client && npm run build --prefix client"
