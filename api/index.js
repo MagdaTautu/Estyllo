@@ -55,4 +55,5 @@ app.use("/api/preturi", preturiRouter);
 app.use("/api/appointments", programariRouter);
 
 
-// "build": "npm install && npm install --prefix client && npm run build --prefix client"
+
+// "build": "react-scripts build"
