@@ -1,0 +1,152 @@
+// Controller functions (programari.controller.js)
+
+export const getAllAppointments = async (req, res, next) => {
+    const db = req.app.get('db');
+
+    try {
+        const query = `SELECT id, personal, date, hour, status FROM programari ORDER BY date, hour`;
+        db.query(query, (err, results) => {
+            if (err) {
+                console.error("Error fetching appointments:", err.message);
+                res.status(500).send("Server error");
+                return;
+            }
+            res.json(results);
+        });
+    } catch (error) {
+        console.error("Error fetching appointments:", error.message);
+        res.status(500).send("Failed to fetch appointments");
+    }
+};
+
+export const bookAppointment = async (req, res, next) => {
+    const db = req.app.get('db');
+    const { personal, date, hour } = req.body;
+
+    if (!personal || !date || !hour) {
+        res.status(400).send("Personal, date, and hour are required");
+        return;
+    }
+
+    try {
+        const query = `INSERT INTO programari (personal, date, hour, status) VALUES (?, ?, ?, 'pending')`;
+        await db.query(query, [personal, date, hour]);
+        res.status(201).send("Appointment booked successfully");
+    } catch (error) {
+        console.error("Error booking appointment:", error.message);
+        res.status(500).send("Failed to book appointment");
+    }
+};
+
+export const approveAppointment = async (req, res, next) => {
+    const db = req.app.get('db');
+    const { id } = req.params;
+
+    if (!id) {
+        res.status(400).send("Appointment ID is required");
+        return;
+    }
+
+    try {
+        const query = `UPDATE programari SET status = 'approved' WHERE id = ?`;
+        await db.query(query, [id]);
+
+        // Optionally, remove the slot from available_hours (not implemented here)
+        // await db.query(`DELETE FROM available_hours WHERE date = ? AND hour = ? AND personal = ?`, [date, hour, personal]);
+
+        res.status(200).send("Appointment approved successfully");
+    } catch (error) {
+        console.error("Error approving appointment:", error.message);
+        res.status(500).send("Failed to approve appointment");
+    }
+};
+
+export const cancelAppointment = async (req, res, next) => {
+    const db = req.app.get('db');
+    const { id } = req.params;
+
+    if (!id) {
+        res.status(400).send("Appointment ID is required");
+        return;
+    }
+
+    try {
+        const query = `DELETE FROM programari WHERE id = ?`;
+        await db.query(query, [id]);
+        res.status(200).send("Appointment cancelled successfully");
+    } catch (error) {
+        console.error("Error cancelling appointment:", error.message);
+        res.status(500).send("Failed to cancel appointment");
+    }
+};
+
+
+export const getAvailableHours = async (req, res, next) => {
+    const db = req.app.get('db');
+    const { personal, date } = req.query;
+    if (!personal || !date) {
+        return res.status(400).send("Personal and date are required");
+    }
+
+    try {
+        const query = `SELECT hour FROM programari WHERE personal = ? AND date = ? AND status = 'approved'`;
+        db.query(query, [personal, date], (err, results) => {
+            if (err) {
+                console.error("Error fetching booked hours:", err.message);
+                return res.status(500).send("Server error");
+            }
+
+            // Ensure bookedHours is defined and mapped correctly
+            const bookedHours = results.map(result => result.hour);
+
+            // Generate all possible hours (assuming from 9:00 to 21:00)
+            const allHours = [];
+            for (let hour = 9; hour <= 21; hour++) {
+                allHours.push(`${hour}:00`);
+            }
+
+            // Log for debugging purposes
+            // console.log("Booked Hours:", bookedHours);
+            // console.log("All Hours:", allHours);
+
+            // Filter out the booked hours
+            const availableHours = allHours.filter(hour => !bookedHours.includes(hour));
+
+            res.json({ availableHours });
+        });
+    } catch (error) {
+        console.error("Error fetching available hours:", error.message);
+        res.status(500).send("Failed to fetch available hours");
+    }
+};
+
+
+
+export const getStaffAppointments = async (req, res, next) => {
+    const db = req.app.get('db');
+    const { personal } = req.query;
+
+    let query = `SELECT id, personal, date, hour, status FROM programari`;
+    const queryParams = [];
+
+    if (personal) {
+        query += ` WHERE personal = ?`;
+        queryParams.push(personal);
+    }
+
+    query += ` ORDER BY date, hour`;
+
+    try {
+        db.query(query, queryParams, (err, results) => {
+            if (err) {
+                console.error("Error fetching appointments:", err.message);
+                res.status(500).send("Server error");
+                return;
+            }
+            res.json(results);
+        });
+    } catch (error) {
+        console.error("Error fetching appointments:", error.message);
+        res.status(500).send("Failed to fetch appointments");
+    }
+};

@@ -1,0 +1,82 @@
+#home{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 100px;
+    margin-top: 100px;
+}
+
+#home div{
+    box-shadow: 1px 1px 20px rgba(0, 0, 0, .2);
+    border-radius: 10px;
+    margin: 0 30px;
+}
+
+#home div.left{
+    padding: 40px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#home div.left img.logo{
+    height: 100px;
+    width: 200px;
+    margin-bottom: 100px;
+}
+
+
+#home .socials, #home .buttons, #home .bottom{
+    box-shadow: none;
+    margin: 0;
+
+}
+#home .socials{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+#home .socials img{
+    margin: 0 10px;
+}
+
+#home .buttons button{
+    margin: 10px;
+    background-color: #B30031;
+    color: #fff;
+    padding: 15px 35px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+
+#home .buttons button.program{
+    background-color: #333333;
+    text-align: left;
+    width: 180px;
+    background-image: url("../assets/images/icons/schedule.png");
+    background-repeat: no-repeat;
+    background-position: 90% 50%;
+}
+
+#home div.program{
+    padding: 20px;
+    width: 250px;
+    margin: 0;
+    position: absolute;
+    background-color: #333333;
+    color: #fff;
+    margin-left: 10px;
+    display: none;
+}
+#home div.program.active{
+    display: block;
+}
+
+#home div.program ul li{
+    display: flex;
+    justify-content: space-between;
+}
+#home div.program ul li span{
+    font-weight: 700;
+}

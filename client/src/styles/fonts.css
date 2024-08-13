@@ -1,0 +1,20 @@
+@font-face{
+    font-family: Inter-Black;
+    src: url('../assets/fonts/Inter-Black.otf');
+}
+
+@font-face{
+    font-family:  Inter-med;
+    src: url('../assets/fonts/Inter-Medium.otf');
+}
+
+@font-face{
+    font-family:  Inter-light;
+    src: url('../assets/fonts/Inter-Light-BETA.otf');
+}
+
+@font-face{
+    font-family:  Knives-light;
+    src: url('../assets/fonts/Bntknvbd.otf');
+}
+

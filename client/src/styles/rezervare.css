@@ -1,0 +1,258 @@
+#rezervare {
+    position: relative;
+    padding-top: 200px;
+}
+html{
+    scroll-behavior: smooth;
+
+}
+
+#rezervare .header {
+    background-color: #1E272E;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    width: 90%;
+    border-radius: 20px;
+    position: fixed;
+    z-index: 20;
+    left: 50%;
+    transform: translate(-50%, -103%);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#rezervare .header .left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#rezervare .content {
+    position: relative;
+}
+#rezervare .content .title{
+    font-size: 1.3rem;
+    font-family: Inter-med;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    margin-top: 50px;
+}
+#rezervare .content .page {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    padding: 30px 50px;
+}
+
+#rezervare .content .page.active {
+    z-index: 2;
+    opacity: 1;
+    pointer-events: all;
+}
+#rezervare .content .page ul.prices li{
+    margin: 10px 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .3);
+    border-radius: 20px;
+    text-transform: capitalize;
+    font-family: Inter-med;
+}
+
+#rezervare .content .page ul li div{
+    display: flex;
+}
+#rezervare .content .page ul li span{
+    align-self: end;
+    font-size: 1.2rem;
+    color: #B30031;
+    font-family: Inter-black;
+}
+#rezervare .content .page ul li div.checkbox{
+    height: 25px;
+    width: 25px;
+    border: 2px solid gray;
+    border-radius: 50%;
+    margin-right: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#rezervare .content .page ul li .inside.checked{
+    height: 15px;
+    width: 15px;
+    background-color: #1E272E;
+    border-radius: 50%;
+}
+
+#rezervare .header button {
+    padding: 10px 20px;
+    border: 2px solid rgb(255, 191, 72);
+    border-radius: 15px;
+}
+
+#rezervare .header button#prev {
+    margin-right: 30px;
+}
+
+#rezervare .header .title {
+    font-size: 25px;
+    font-family: Inter-black;
+    margin-right: 20px;
+}
+
+#rezervare .header button#next {
+    background-color: rgb(255, 191, 72);
+    color: #000;
+    font-weight: 800;
+    font-family: Inter-med;
+    text-transform: uppercase;
+}
+
+
+#rezervare .content .page ul li.active {
+    background-color: #f0f0f0; /* Highlight the active item */
+}
+
+#rezervare .content .page ul li .checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 25px;
+    border: 2px solid gray;
+    border-radius: 50%;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+#rezervare .content .page ul li .inside {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: transparent;
+    transition: background-color 0.3s;
+}
+
+#rezervare .content .page ul li .inside.checked {
+    background-color: rgb(255, 191, 72); 
+}
+
+#rezervare .content .page ul li span{
+    align-self: flex-end;
+    
+}
+#rezervare  .bottom{
+    display: flex;
+    flex-direction: row;
+    padding:  50px;
+}
+
+#rezervare  .bottom .right{
+    width: 30%;
+    min-height: 300px;
+    margin-top: 75px;
+    background-color: #1E272E;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: fixed;
+    right: 90px;
+}
+
+#rezervare  .bottom .content{
+    width: 60%;
+    position: relative;
+}
+
+#rezervare  .bottom .right .top{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+#rezervare  .bottom .right .top img{
+    height: 70px;
+    width: 100px;
+    margin-right: 20px;
+    
+}
+
+#rezervare  .bottom .right .info{
+    background-color: #fff;
+    width: 100%;
+    padding: 10px 20px;
+    font-family: Inter-med;
+    border-radius: 10px;
+}
+#rezervare  .bottom .right .bottom {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#rezervare  .bottom .right .bottom .info{
+    min-height: 180px;
+    margin-top: 10px;
+    padding: 20px;
+    text-transform: capitalize;
+}
+
+#rezervare  .bottom .right .bottom .info.total{
+    min-height: unset;
+}
+
+#rezervare .navbar{
+    padding: 30px 100px;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    z-index: 20;
+    background-color: #f0f0f0;
+    width: 90%;
+    margin: auto;
+    left: 50%;
+    transform: translate(-50%, -100%);
+}
+
+#rezervare .navbar li{
+    color: #1E272E;
+    font-family: Inter-med;
+    cursor: pointer;
+}
+#rezervare .navbar li.active{
+    font-family: Inter-black;
+}
+
+#rezervare  .bottom .right .info ul li{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 1.2rem;
+}
+
+
+#rezervare  .bottom .right .info p.small{
+    font-size: 1rem;
+    opacity: .5;
+}
+
+#rezervare  .bottom .content .page h1{
+    color: #B30031;
+    font-size: 1.5rem;
+    font-family: Inter-med;
+}

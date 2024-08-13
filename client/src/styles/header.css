@@ -1,0 +1,43 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#header{
+    padding: 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 20;
+    background-color: #fff;
+}
+
+#header ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 70%;
+    margin: auto;
+    list-style: none;
+}
+
+#header ul li {
+    font-family: Inter-med;
+    font-size: 1.2em;
+}
+#header ul a {
+    color: #000;
+    text-decoration: none;
+}
+
+#header ul li#rezervare{
+    background-color: #B30031;
+    padding: 10px 20px;
+    color: #fff;
+    border-radius: 10px;
+}

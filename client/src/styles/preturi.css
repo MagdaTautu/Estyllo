@@ -1,0 +1,77 @@
+#preturi{
+    min-height: 100vh;
+    font-family: Inter-light;
+    background-image: url('../assets/images/background1.png');
+    background-size: contain;
+    background-position: 140% 100%;
+    background-repeat: no-repeat;
+    margin-top: 150px;
+}
+
+
+#preturi .header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#preturi .header .subtitle{
+    font-family: Knives-light;
+    font-size: 2rem;
+    color: #B30031;
+}
+
+#preturi .header h1{
+    font-size: 1.4rem;
+    font-family: Inter-black;
+    letter-spacing: 3px;
+}
+#preturi .header .subheader{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+#preturi .header .line{
+    height: 3px ;
+    width: 100px;
+    background-image: url('../assets/images/line.png');
+}
+
+#preturi div.prices{
+    padding: 50px 40px;
+    display: flex;
+    min-height: 90vh;
+    flex-wrap: wrap;
+
+}
+#preturi .prices .service{
+    background-color: #fff;
+    margin: 10px 20px;
+    min-width: 350px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, .4);
+}
+
+#preturi .prices .service .title{
+    font-size: 1.2rem;
+    font-family: Inter-med;
+    color: #B30031;
+    margin-bottom: 17px;
+    align-self: center;
+}
+
+#preturi .prices .service ul li{
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#preturi .prices .service ul li strong{
+    max-width: 60%;
+    text-transform: capitalize;
+}

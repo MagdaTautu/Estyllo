@@ -1,0 +1,45 @@
+
+
+#footer{
+    background-image: url("../assets/images/footer.png");
+    background-position: center;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    position: relative;
+}
+
+#footer .overlay{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .8);
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+#footer img{
+    height: 90px;
+    width: 150px;
+    z-index: 5;
+}
+
+#footer .info{
+    z-index: 5;
+    display: flex;
+    margin-top: 20px;
+}
+
+#footer .info .line{
+    margin: 30px 0;
+}
+#footer .info .left{
+    margin-right: 100px;
+}
+
+#footer .info .line .title{
+    font-size: 1.1rem;
+    font-family: Inter-Black;
+}
