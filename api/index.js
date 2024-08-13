@@ -43,6 +43,11 @@ app.get('*',(req,res)=> {
 
 
 app.use(cors(corsOptions));
+app.use(cors({
+    origin: 'https://estyllo-salon.onrender.com', // Replace with your actual frontend URL
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true
+}));
 app.use(express.json());
 app.use("/api/personal", personalRouter);
 app.use("/api/reviews", reviewsRouter);
