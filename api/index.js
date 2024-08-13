@@ -13,10 +13,10 @@ app.listen(3000, () => {
 });
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "estyllo"
+    host: process.env.DB_HOST || "localhost",  // Fallback to localhost for local development
+    user: process.env.DB_USER || "root",
+    password: process.env.DB_PASS || "",
+    database: process.env.DB_NAME || "estyllo"
 });
 db.connect((err) => {
     if (err) {
