@@ -5,7 +5,7 @@ import reviewsRouter from './routes/reviews.routes.js';
 import cors from 'cors';
 import preturiRouter from "./routes/preturi.routes.js";
 import programariRouter from "./routes/programari.route.js";
-
+import path from "path"
 const app = express();
 
 app.listen(3000, () => {
@@ -26,6 +26,7 @@ db.connect((err) => {
     console.log("Connected to the estyllo database");
 });
 
+const __dirname = path.resolve()
 app.set('db', db);
 
 const corsOptions = {
@@ -35,6 +36,11 @@ const corsOptions = {
     },
     credentials: true
 };
+app.use(express.static(path.join(__dirname,"/client/dist")))
+app.get('*',(req,res)=> {
+    res.sendFile(path.join(__dirname,'client', 'dist', 'index.html'))
+})
+
 
 app.use(cors(corsOptions));
 app.use(express.json());
