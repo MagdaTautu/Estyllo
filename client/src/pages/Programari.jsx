@@ -14,7 +14,7 @@ const Programari = () => {
     }, []);
     const fetchStaff = async () => {
         try {
-            const response = await fetch('https://estyllo.onrender.comapi/personal/getAll');
+            const response = await fetch('https://estyllo.onrender.com/api/personal/getAll');
             const data = await response.json();
             console.log('Staff Data:', data); // Ensure this is correctly formatted
             setStaffList(data);
@@ -26,7 +26,7 @@ const Programari = () => {
 
     const fetchAppointments = async () => {
         try {
-            const response = await fetch('https://estyllo.onrender.comapi/appointments/getAll');
+            const response = await fetch('https://estyllo.onrender.com/api/appointments/getAll');
             const data = await response.json();
             setAppointments(data);
         } catch (error) {
@@ -45,7 +45,7 @@ const Programari = () => {
     };
     const handleApprove = async (id) => {
         try {
-            const response = await fetch(`https://estyllo.onrender.comapi/appointments/approve/${id}`, {
+            const response = await fetch(`https://estyllo.onrender.com/api/appointments/approve/${id}`, {
                 method: 'POST',
             });
 
@@ -61,7 +61,7 @@ const Programari = () => {
 
     const handleCancel = async (id) => {
         try {
-            const response = await fetch(`https://estyllo.onrender.comapi/appointments/cancel/${id}`, {
+            const response = await fetch(`https://estyllo.onrender.com/api/appointments/cancel/${id}`, {
                 method: 'POST',
             });
 

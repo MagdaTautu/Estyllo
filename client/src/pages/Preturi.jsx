@@ -22,7 +22,7 @@ function Preturi() {
 
   const fetchFrizeriePrices = async () => {
     try {
-      const response = await fetch('https://estyllo.onrender.comapi/preturi/frizerie');
+      const response = await fetch('https://estyllo.onrender.com/api/preturi/frizerie');
       const data = await response.json();
       setPricesFrizerie(data);
     } catch (error) {
@@ -32,7 +32,7 @@ function Preturi() {
 
   const fetchManiPediPrices = async () => {
     try {
-      const response = await fetch('https://estyllo.onrender.comapi/preturi/manipedi');
+      const response = await fetch('https://estyllo.onrender.com/api/preturi/manipedi');
       const data = await response.json();
       setPricesManiPedi(data);
     } catch (error) {
@@ -41,7 +41,7 @@ function Preturi() {
   };
   const fetchVopsitPrices = async () => {
     try {
-      const response = await fetch('https://estyllo.onrender.comapi/preturi/vopsit');
+      const response = await fetch('https://estyllo.onrender.com/api/preturi/vopsit');
       const data = await response.json();
       setPricesVopsit(data);
     } catch (error) {
@@ -50,7 +50,7 @@ function Preturi() {
   };
   const fetchCosmeticaFemeiPrices = async () => {
     try {
-      const response = await fetch('https://estyllo.onrender.comapi/preturi/cosmeticafemei');
+      const response = await fetch('https://estyllo.onrender.com/api/preturi/cosmeticafemei');
       const data = await response.json();
       setPricesCosmeticaFemei(data);
     } catch (error) {
@@ -59,7 +59,7 @@ function Preturi() {
   };
   const fetchCosmeticaBarbatiPrices = async () => {
     try {
-      const response = await fetch('https://estyllo.onrender.comapi/preturi/cosmeticabarbati');
+      const response = await fetch('https://estyllo.onrender.com/api/preturi/cosmeticabarbati');
       const data = await response.json();
       setPricesCosmeticaBarbati(data);
     } catch (error) {
