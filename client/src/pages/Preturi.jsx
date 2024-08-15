@@ -10,18 +10,29 @@ function Preturi() {
   const [pricesCosmeticaFemei, setPricesCosmeticaFemei] = useState([]);
   const [pricesCosmeticaBarbati, setPricesCosmeticaBarbati] = useState([]);
 
+  const [error, setError] = useState(null);
+
   const fetchPrices = async (url, setPrices) => {
     try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+  
+      // Ensure data is an array before setting state
+      if (Array.isArray(data)) {
         setPrices(data);
+      } else {
+        console.error("Expected array but got:", data);
+        setPrices([]);  // Set an empty array if the response is not as expected
+      }
     } catch (error) {
-        console.error("Error fetching prices:", error.message);
+      console.error("Error fetching prices:", error.message);
+      setError(error.message);
+      setPrices([]);  // Set an empty array in case of an error
     }
-};
+  };
 
   const fetchCoaforPrices = async () => {
     try {
@@ -63,32 +74,26 @@ function Preturi() {
   };
 
   
-  // const fetchCosmeticaFemeiPrices = async () => {
-  //   try {
-  //     const response = await fetch('https://estyllo.onrender.com/api/preturi/cosmeticafemei');
-  //     console.log(response.json())
-  //     const data = await response.json();
-  //     setPricesCosmeticaFemei(data);
-  //   } catch (error) {
-  //     console.error("Error fetching prices:", error);
-  //   }
-  // };
+  const fetchCosmeticaFemeiPrices = async () => {
+    try {
+      const response = await fetch('https://estyllo.onrender.com/api/preturi/cosmeticafemei');
+      const data = await response.json();
+      setPricesCosmeticaFemei(data);
+    } catch (error) {
+      console.error("Error fetching prices:", error);
+    }
+  };
 
-  const fetchCosmeticaFemeiPrices = () => {
-    fetchPrices('http://localhost:3000/api/preturi/cosmeticafemei', setPricesCosmeticaFemei);
-  };
-  const fetchCosmeticaBarbatiPrices = () => {
-    fetchPrices('https://estyllo.onrender.com/api/preturi/cosmeticabarbati', setPricesCosmeticaBarbati);
-  };
-  // const fetchCosmeticaBarbatiPrices = async () => {
-  //   try {
-  //     const response = await fetch('https://estyllo.onrender.com/api/preturi/cosmeticabarbati');
-  //     const data = await response.json();
-  //     setPricesCosmeticaBarbati(data);
-  //   } catch (error) {
-  //     console.error("Error fetching prices:", error);
-  //   }
-  // };
+  
+    const fetchCosmeticaBarbatiPrices = async () => {
+      try {
+        const response = await fetch('https://estyllo.onrender.com/api/preturi/cosmeticabarbati');
+        const data = await response.json();
+        setPricesCosmeticaBarbati(data);
+      } catch (error) {
+        console.error("Error fetching prices:", error);
+      }
+    };
 
   useEffect(() => {
     fetchCoaforPrices();
@@ -98,6 +103,7 @@ function Preturi() {
     fetchCosmeticaFemeiPrices();
     fetchCosmeticaBarbatiPrices()
   }, []);
+  console.log(error)
   return (
     <div id="preturi">
       <div className="header">
@@ -109,90 +115,103 @@ function Preturi() {
           <div className="line"></div>
         </div>
       </div>
+      {error && <p className="error-message">Error fetching prices: {error}</p>}
       <div className="prices">
         <div className="service">
-            <p className="title">Coafor</p>
-            <ul className='prices'>
-              {pricesCoafor.length === 0 ? (
-                <li className='item'>No prices available</li>
-              ) : (
-                pricesCoafor.map((price, index) => (
-                  <li key={index} className='item'>
-                    <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
-                  </li>
-                ))
-              )}
-            </ul>
+          <p className="title">Coafor</p>
+          <ul className='prices'>
+            {Array.isArray(pricesCoafor) && pricesCoafor.length === 0 ? (
+              <li className='item'>No prices available</li>
+            ) : Array.isArray(pricesCoafor) ? (
+              pricesCoafor.map((price, index) => (
+                <li key={index} className='item'>
+                  <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
+                </li>
+              ))
+            ) : (
+              <li className='item'>Invalid data received. Please refresh the page</li>
+            )}
+          </ul>
         </div>
         <div className="service">
           <p className="title">Frizerie</p>
-            <ul className='prices'>
-              {pricesFrizerie.length === 0 ? (
-                <li className='item'>No prices available</li>
-              ) : (
-                pricesFrizerie.map((price, index) => (
-                  <li key={index} className='item'>
-                    <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
-                  </li>
-                ))
-              )}
-            </ul>
+          <ul className='prices'>
+            {Array.isArray(pricesFrizerie) && pricesFrizerie.length === 0 ? (
+              <li className='item'>No prices available</li>
+            ) : Array.isArray(pricesFrizerie) ? (
+              pricesFrizerie.map((price, index) => (
+                <li key={index} className='item'>
+                  <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
+                </li>
+              ))
+            ) : (
+              <li className='item'>Invalid data received. Please refresh the page</li>
+            )}
+          </ul>
         </div>
         <div className="service">
           <p className="title">Manichiura | Pedichiura</p>
-            <ul className='prices'>
-              {pricesManiPedi.length === 0 ? (
-                <li className='item'>No prices available</li>
-              ) : (
-                pricesManiPedi.map((price, index) => (
-                  <li key={index} className='item'>
-                    <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
-                  </li>
-                ))
-              )}
-            </ul>
+          <ul className='prices'>
+            {Array.isArray(pricesManiPedi) && pricesManiPedi.length === 0 ? (
+              <li className='item'>No prices available</li>
+            ) : Array.isArray(pricesManiPedi) ? (
+              pricesManiPedi.map((price, index) => (
+                <li key={index} className='item'>
+                  <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
+                </li>
+              ))
+            ) : (
+              <li className='item'>Invalid data received. Please refresh the page</li>
+            )}
+          </ul>
         </div>
         <div className="service">
           <p className="title">Vopsit + manopera</p>
-            <ul className='prices'>
-              {pricesVopsit.length === 0 ? (
-                <li className='item'>No prices available</li>
-              ) : (
-                pricesVopsit.map((price, index) => (
-                  <li key={index} className='item'>
-                    <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
-                  </li>
-                ))
-              )}
-            </ul>
+          <ul className='prices'>
+            {Array.isArray(pricesVopsit) && pricesVopsit.length === 0 ? (
+              <li className='item'>No prices available</li>
+            ) : Array.isArray(pricesVopsit) ? (
+              pricesVopsit.map((price, index) => (
+                <li key={index} className='item'>
+                  <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
+                </li>
+              ))
+            ) : (
+              <li className='item'>Invalid data received. Please refresh the page</li>
+            )}
+          </ul>
         </div>
         <div className="service">
           <p className="title">Cosmetica femei</p>
-            <ul className='prices'>
-              {pricesCosmeticaFemei.length === 0 ? (
-                <li className='item'>No prices available</li>
-              ) : (
-                pricesCosmeticaFemei.map((price, index) => (
-                  <li key={index} className='item'>
-                    <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
-                  </li>
-                ))
-              )}
-            </ul>
+          <ul className='prices'>
+            {Array.isArray(pricesCosmeticaFemei) && pricesCosmeticaFemei.length === 0 ? (
+              <li className='item'>No prices available</li>
+            ) : Array.isArray(pricesCosmeticaFemei) ? (
+              pricesCosmeticaFemei.map((price, index) => (
+                <li key={index} className='item'>
+                  <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
+                </li>
+              ))
+            ) : (
+              <li className='item'>Invalid data received. Please refresh the page</li>
+            )}
+          </ul>
         </div>
         <div className="service">
           <p className="title">Cosmetica barbati</p>
-            <ul className='prices'>
-              {pricesCosmeticaBarbati.length === 0 ? (
-                <li className='item'>No prices available</li>
-              ) : (
-                pricesCosmeticaBarbati.map((price, index) => (
-                  <li key={index} className='item'>
-                    <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
-                  </li>
-                ))
-              )}
-            </ul>
+          <ul className='prices'>
+            {Array.isArray(pricesCosmeticaBarbati) && pricesCosmeticaBarbati.length === 0 ? (
+              <li className='item'>No prices available</li>
+            ) : Array.isArray(pricesCosmeticaBarbati) ? (
+              pricesCosmeticaBarbati.map((price, index) => (
+                <li key={index} className='item'>
+                  <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
+                </li>
+              ))
+            ) : (
+              <li className='item'>Invalid data received. Please refresh the page</li>
+            )}
+          </ul>
         </div>
       </div>
       
