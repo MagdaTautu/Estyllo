@@ -33,7 +33,7 @@ const DateSlider = ({ highlightedDates, selectedPersonal }) => {
         // Fetch available hours for the selected date and personal
         const formattedDateStr = formatDateToYYYYMMDD(dateStr);
         try {
-            const response = await fetch(`http://localhost:3000/api/appointments/available-hours?personal=${selectedPersonal}&date=${formattedDateStr}`);
+            const response = await fetch(`https://estyllo.onrender.com/api/appointments/available-hours?personal=${selectedPersonal}&date=${formattedDateStr}`);
             const data = await response.json();
             console.log(data)
 
@@ -52,7 +52,7 @@ const DateSlider = ({ highlightedDates, selectedPersonal }) => {
         };
 
         try {
-            const response = await fetch('http://localhost:3000/api/appointments/create', {
+            const response = await fetch('https://estyllo.onrender.com/api/appointments/create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(appointment),
