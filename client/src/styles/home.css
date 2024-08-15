@@ -80,3 +80,73 @@
 #home div.program ul li span{
     font-weight: 700;
 }
+
+
+@media only screen and (max-width: 480px) {
+    /* Styles for mobile phones */
+    #home{
+        flex-direction: column;
+        padding: 20px;
+    }
+    #home div.left{
+        width: 100%;
+        margin: 0;
+        margin-bottom: 20px;
+    }
+    #home div.right{
+        margin: 0;
+    }
+    #home div.right iframe{
+        width: 100%;
+    }
+  }
+  
+  /* Small Devices (Large Phones) */
+  @media only screen and (min-width: 481px) and (max-width: 767px) {
+    /* Styles for large phones */
+    #home{
+        flex-direction: column;
+        padding: 20px;
+
+    }
+    #home div.left{
+        width: 100%;
+        margin: 0;
+        margin-bottom: 20px;
+    }
+    #home div.right{
+        margin: 0;
+    }
+    #home div.right iframe{
+        width: 100%;
+    }
+  }
+  
+  /* Medium Devices (Tablets) */
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablets */
+    #home{
+        flex-direction: column;
+    }
+    #home div.left{
+        width: 100%;
+        margin: 0;
+        margin-bottom: 20px;
+    }
+    #home div.right{
+        margin: 0;
+    }
+    #home div.right iframe{
+        width: 100%;
+    }
+  }
+  
+  /* Large Devices (Laptops, Small Desktops) */
+  @media only screen and (min-width: 1025px) and (max-width: 1440px) {
+    /* Styles for laptops and small desktops */
+  }
+  
+  /* Extra Large Devices (Large Desktops) */
+  @media only screen and (min-width: 1441px) {
+    /* Styles for large desktops */
+  }

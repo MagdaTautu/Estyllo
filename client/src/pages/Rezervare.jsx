@@ -7,13 +7,24 @@ function Rezervare() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pricesCoafor, setPricesCoafor] = useState([]);
   const [pricesFrizerie, setPricesFrizerie] = useState([]);
+  const [pricesCosmeticaFemei, setPricesCosmeticaFemei] = useState([]);
+  const [pricesManichiura, setPricesManichiura] = useState([]);
+
+
+
   const [activeCoaforIndex, setActiveCoaforIndex] = useState(null);
+  const [activeManiIndex, setActiveManiIndex] = useState(null);
+  const [activeCosmeticaFemeiIndex, setActiveCosmeticaFemei] = useState(null);
   const [activeFrizerieIndex, setActiveFrizerieIndex] = useState(null);
+
+
+
   const [services, setServices] = useState([]);
   const [activeNav, setActiveNav] = useState("coafor"); // State for active navbar link
   const [total, setTotal] = useState(0);
   const [type, setType] = useState([]);
   const [team, setTeam] = useState([]);
+  const [final, setFinal] = useState("")
 
   const fetchPrices = async (service_name) => {
     try {
@@ -27,6 +38,14 @@ function Rezervare() {
       } else if (service_name === "frizerie") {
         setPricesFrizerie(data);
         setActiveFrizerieIndex(null);
+      }
+      else if (service_name === "cosmetica_femei") {
+        setPricesCosmeticaFemei(data);
+        setActiveCosmeticaFemei(null);
+      }
+      else if (service_name === "mani_pedi") {
+        setPricesManichiura(data);
+        setActiveManiIndex(null);
       }
     } catch (error) {
       console.error("Error fetching prices:", error);
@@ -55,44 +74,20 @@ function Rezervare() {
     }
   };
 
-  // const handleCheckCoafor = (index, service, price,type) => {
-  //     setActiveCoaforIndex(index);
-  //     setServices(prevServices => {
-  //         const isServiceSelected = prevServices.some(s => s.service === service);
-  //         let updatedServices;
-  //         if (isServiceSelected) {
-  //             updatedServices = prevServices.filter(s => s.service !== service);
-  //             setTotal(prevTotal => prevTotal - price/2);
-  //         } else {
-  //             updatedServices = [...prevServices, { service, price,type }];
-  //             setTotal(prevTotal => prevTotal + price/2);
-  //         }
-  //         return updatedServices;
-  //     });
-  // };
   const handleCheckCoafor = (index, service, price, type) => {
     setActiveCoaforIndex(index);
     setServices([{ service, price, type }]);
     setTotal(price);
   };
 
-  // const handleCheckFrizerie = (index, service, price, type) => {
-  //     setActiveFrizerieIndex(index);
-  //     setServices(prevServices => {
-  //         const isServiceSelected = prevServices.some(s => s.service === service);
-  //         let updatedServices;
-  //         if (isServiceSelected) {
-  //             updatedServices = prevServices.filter(s => s.service !== service);
-  //             setTotal(prevTotal => prevTotal - price/2);
-  //         } else {
-  //             updatedServices = [...prevServices, { service, price,type }];
-  //             setTotal(prevTotal => prevTotal + price/2);
-  //         }
-  //         return updatedServices;
-  //     });
-  // };
   const handleCheckFrizerie = (index, service, price, type) => {
     setActiveFrizerieIndex(index);
+    setServices([{ service, price, type }]);
+    setTotal(price);
+  };
+
+  const handleCheckCosmeticaFemei = (index, service, price, type) => {
+    setActiveCosmeticaFemei(index);
     setServices([{ service, price, type }]);
     setTotal(price);
   };
@@ -107,19 +102,38 @@ function Rezervare() {
     });
   };
   const nextPage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % 3);
-    services.forEach((serviceObj) => {
-      fetchPersonal(serviceObj.type);
-    });
-    if (selectedPersonal.length > 0) {
-      handleShowDays(team);
+    if(currentIndex === 3)
+    setCurrentIndex(0)
+    else{
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % 4);
+      services.forEach((serviceObj) => {
+        fetchPersonal(serviceObj.type);
+      });
+      if (selectedPersonal.length > 0) {
+        handleShowDays(team);
+      }
     }
+    if(currentIndex == 2){
+      setFinal("final")
+    }
+    else setFinal("")
+
   };
 
   const prevPage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + 3) % 3);
+    if(currentIndex === 0)
+    setCurrentIndex(3)
+    else {
+      setCurrentIndex((prevIndex) => (prevIndex - 1 ) % 3);
+      
+    }
+    if(currentIndex ===0){
+      setFinal("final")
+    }
+    else setFinal("")
     setPersonal([]);
-  };
+  }
+    
 
   const handleNavClick = (sectionId) => {
     setActiveNav(sectionId);
@@ -129,6 +143,8 @@ function Rezervare() {
   useEffect(() => {
     fetchPrices("coafor_femei");
     fetchPrices("frizerie");
+    fetchPrices("cosmetica_femei");
+    fetchPrices("mani_pedi");
   }, []);
   const [selectedPersonal, setSelectedPersonal] = useState([]);
   const handlePersonalClick = (person) => {
@@ -143,7 +159,6 @@ function Rezervare() {
     fetchTeam(person);
   };
 
-  console.log(selectedPersonal)
   const fetchTeam = async (person) => {
     try {
       const response = await fetch(
@@ -175,9 +190,9 @@ function Rezervare() {
       console.error("Error fetching schedule:", error);
     }
   };
-  const staticHighlightedDates = ["2024-8-9", "2024-8-10"];
   const titles = ["Serviciile", "Specialistul", "Data"];
-  // console.log(selectedPersonal)
+
+
   return (
     <div id="rezervare">
       <div className="header">
@@ -217,23 +232,23 @@ function Rezervare() {
               </li>
               <li
                 className={`nav-item ${
-                  activeNav === "cos_fem" ? "active" : ""
+                  activeNav === "cosmetica_femei" ? "active" : ""
                 }`}
-                onClick={() => handleNavClick("cos_fem")}
+                onClick={() => handleNavClick("cosmetica_femei")}
               >
                 Cosmetica Femei
               </li>
               <li
                 className={`nav-item ${
-                  activeNav === "cos_barb" ? "active" : ""
+                  activeNav === "cosmetica_barbati" ? "active" : ""
                 }`}
-                onClick={() => handleNavClick("cos_barb")}
+                onClick={() => handleNavClick("cosmetica_barbati")}
               >
                 Cosmetica Barbati
               </li>
               <li
-                className={`nav-item ${activeNav === "mani" ? "active" : ""}`}
-                onClick={() => handleNavClick("mani")}
+                className={`nav-item ${activeNav === "mani_pedi" ? "active" : ""}`}
+                onClick={() => handleNavClick("mani_pedi")}
               >
                 Manichiura si pedichiura
               </li>
@@ -320,6 +335,88 @@ function Rezervare() {
                 ))}
               </ul>
             </div>
+            <div id="cosmetica_femei">
+              <p className="title">Cosmetica Femei</p>
+              <ul className="prices">
+                {pricesCosmeticaFemei.map((priceObj, index) => (
+                  <li
+                    key={index}
+                    className={
+                      services.some((s) => s.service === priceObj.serviciu)
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() => {
+                      handleCheckFrizerie(
+                        index,
+                        priceObj.serviciu,
+                        priceObj.pret,
+                        "cosmetica_femei"
+                      );
+                      handleSetTypes("cosmetica_femei");
+                    }}
+                    value="cosmetica_femei"
+                  >
+                    <div>
+                      <div className="checkbox">
+                        <div
+                          className={`inside ${
+                            services.some(
+                              (s) => s.service === priceObj.serviciu
+                            )
+                              ? "checked"
+                              : ""
+                          }`}
+                        ></div>
+                      </div>
+                      {priceObj.serviciu}
+                    </div>
+                    <span>{priceObj.pret} RON</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div id="mani_pedi">
+              <p className="title">Manichiura si Pedichiura</p>
+              <ul className="prices">
+                {pricesCosmeticaFemei.map((priceObj, index) => (
+                  <li
+                    key={index}
+                    className={
+                      services.some((s) => s.service === priceObj.serviciu)
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() => {
+                      handleCheckFrizerie(
+                        index,
+                        priceObj.serviciu,
+                        priceObj.pret,
+                        "mani_pedi"
+                      );
+                      handleSetTypes("mani_pedi");
+                    }}
+                    value="mani_pedi"
+                  >
+                    <div>
+                      <div className="checkbox">
+                        <div
+                          className={`inside ${
+                            services.some(
+                              (s) => s.service === priceObj.serviciu
+                            )
+                              ? "checked"
+                              : ""
+                          }`}
+                        ></div>
+                      </div>
+                      {priceObj.serviciu}
+                    </div>
+                    <span>{priceObj.pret} RON</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
           <div className={`page ${currentIndex === 1 ? "active" : ""}`} id="select_specialist">
             {/* <p>Personal</p> */}
@@ -373,8 +470,12 @@ function Rezervare() {
             <DateSlider highlightedDates={highlightedDates} selectedPersonal={selectedPersonal} />
             {/* <HourPicker highlightedDates={highlightedDates}/> */}
           </div>
+
+          <div className={`page ${currentIndex === 3 ? "active" : ""}`} id="final">
+          
+          </div>
         </div>
-        <div className="right">
+        <div className={`right ${final}`}>
           <div className="top">
             <img src={logo} alt="" />
             <div className="info">

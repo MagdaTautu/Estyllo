@@ -15,8 +15,12 @@
     z-index: 20;
     background-color: #fff;
 }
+#header .content{
+    display: flex;
+    justify-content: flex-end;
+}
 
-#header ul {
+#header ul  {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -26,7 +30,7 @@
     list-style: none;
 }
 
-#header ul li {
+#header ul  li {
     font-family: Inter-med;
     font-size: 1.2em;
 }
@@ -35,9 +39,96 @@
     text-decoration: none;
 }
 
-#header ul li#rezervare{
+#header ul  li#rezervare{
     background-color: #B30031;
     padding: 10px 20px;
     color: #fff;
     border-radius: 10px;
 }
+
+
+#header .toggle-menu{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 50px;
+    width: 50px;
+    z-index: 20;
+    cursor: pointer;
+    align-self: flex-end;
+}
+#header .toggle-menu span{
+    height: 5px;
+    background-color: #000;
+    width: 80%;
+
+}
+#header .mobile-menu{
+    display: none;
+}
+#header .toggle-menu.visible span{
+    background-color: #fff;
+
+}
+#header .mobile-menu.visible{
+    display: flex;
+    position: absolute;
+    background-color: rgba(0, 0, 0, .95);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    color: #fff;
+    justify-content: space-evenly;
+    
+}
+
+
+#header .mobile-menu a{
+    color: #fff;
+}
+
+
+@media only screen and (max-width: 480px) {
+    /* Styles for mobile phones */
+    #header .toggle-menu{
+        display: flex;
+    }
+    #header ul.navbar{
+        display: none;
+    }
+  }
+  
+  /* Small Devices (Large Phones) */
+  @media only screen and (min-width: 481px) and (max-width: 767px) {
+    /* Styles for large phones */
+    #header .toggle-menu{
+        display: flex;
+    }
+    #header ul.navbar{
+        display: none;
+    }
+  }
+  
+  /* Medium Devices (Tablets) */
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablets */
+    #header .toggle-menu{
+        display: flex;
+    }
+    #header ul.navbar{
+        display: none;
+    }
+  }
+  
+  /* Large Devices (Laptops, Small Desktops) */
+  @media only screen and (min-width: 1025px) and (max-width: 1440px) {
+    /* Styles for laptops and small desktops */
+  }
+  
+  /* Extra Large Devices (Large Desktops) */
+  @media only screen and (min-width: 1441px) {
+    /* Styles for large desktops */
+  }

@@ -173,6 +173,20 @@ html{
     right: 90px;
 }
 
+#rezervare  .bottom .right.final{
+    width: 60%;
+    min-height: 300px;
+    margin-top: 75px;
+    background-color: #1E272E;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 #rezervare  .bottom .content{
     width: 60%;
     position: relative;
@@ -256,3 +270,69 @@ html{
     font-size: 1.5rem;
     font-family: Inter-med;
 }
+
+
+
+/* Extra Small Devices (Mobile Phones) */
+@media only screen and (max-width: 480px) {
+    /* Styles for mobile phones */
+    #rezervare  .bottom{
+        padding: 0;
+    }
+    #rezervare  .bottom .right{
+        display: none;
+    }
+    
+    #rezervare .bottom .content{
+        width: 100%;
+    }
+  }
+  
+  /* Small Devices (Large Phones) */
+  @media only screen and (min-width: 481px) and (max-width: 767px) {
+    /* Styles for large phones */
+    #rezervare  .bottom{
+        padding: 0;
+    }
+    #rezervare  .bottom .right{
+        display: none;
+    }
+    
+    #rezervare .bottom .content{
+        width: 100%;
+    }
+  }
+  
+  /* Medium Devices (Tablets) */
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablets */
+    #rezervare  .bottom{
+        padding: 0;
+    }
+    
+    #rezervare  .bottom .right{
+        display: none;
+    }
+    
+    #rezervare .bottom .content{
+        width: 100%;
+    }
+  }
+  
+  /* Large Devices (Laptops, Small Desktops) */
+  @media only screen and (min-width: 1025px) and (max-width: 1440px) {
+    /* Styles for laptops and small desktops */
+    #rezervare  .bottom .right{
+        display: none;
+    }
+    
+    #rezervare .bottom .content{
+        width: 100%;
+    }
+  }
+  
+  /* Extra Large Devices (Large Desktops) */
+  @media only screen and (min-width: 1441px) {
+    /* Styles for large desktops */
+  }
+  

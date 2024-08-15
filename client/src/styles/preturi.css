@@ -75,3 +75,48 @@
     max-width: 60%;
     text-transform: capitalize;
 }
+
+
+
+/* Extra Small Devices (Mobile Phones) */
+@media only screen and (max-width: 480px) {
+    /* Styles for mobile phones */
+    #preturi .prices .service {
+        width: 100%;
+        min-width: 0;
+        margin: 20px 0;
+    }
+  }
+  
+  /* Small Devices (Large Phones) */
+  @media only screen and (min-width: 481px) and (max-width: 767px) {
+    /* Styles for large phones */
+    #preturi div.prices{
+        padding: 30px;
+    }
+    #preturi .prices .service {
+        flex: 0 0 100%;
+        min-width: 0;
+        margin: 20px 0;
+    }
+  }
+  
+  /* Medium Devices (Tablets) */
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablets */
+    #preturi .prices .service {
+        min-width: 0;
+        flex: 0 0 44%;
+    }
+  }
+  
+  /* Large Devices (Laptops, Small Desktops) */
+  @media only screen and (min-width: 1025px) and (max-width: 1440px) {
+    /* Styles for laptops and small desktops */
+  }
+  
+  /* Extra Large Devices (Large Desktops) */
+  @media only screen and (min-width: 1441px) {
+    /* Styles for large desktops */
+  }
+  
