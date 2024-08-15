@@ -6,6 +6,9 @@ import cors from 'cors';
 import preturiRouter from "./routes/preturi.routes.js";
 import programariRouter from "./routes/programari.route.js";
 import path from "path"
+import dotenv from "dotenv"
+
+dotenv.config();
 const app = express();
 
 app.listen(3000, () => {
@@ -13,11 +16,12 @@ app.listen(3000, () => {
 });
 
 const db = mysql.createConnection({
-    host: process.env.DB_HOST || "localhost",  // Fallback to localhost for local development
-    user: process.env.DB_USER || "root",
-    password: process.env.DB_PASS || "",
-    database: process.env.DB_NAME || "estyllo"
+    host: process.env.DB_HOST , 
+    user: process.env.DB_USER ,
+    password: process.env.DB_PASS ,
+    database: process.env.DB_NAME 
 });
+console.log(process.env.DB_USER)
 db.connect((err) => {
     if (err) {
         console.error("Error connecting to the database:", err.message);
