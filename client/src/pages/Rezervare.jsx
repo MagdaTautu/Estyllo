@@ -18,7 +18,7 @@ function Rezervare() {
   const fetchPrices = async (service_name) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/preturi/general?service=${service_name}`
+        `https://estyllo.onrender.comapi/preturi/general?service=${service_name}`
       );
       const data = await response.json();
       if (service_name === "coafor_femei") {
@@ -40,7 +40,7 @@ function Rezervare() {
   const fetchPersonal = async (service_name) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/personal/getPersonal?service=${service_name}`
+        `https://estyllo.onrender.comapi/personal/getPersonal?service=${service_name}`
       );
       const data = await response.json();
       const pers = data.map((person) => person.nume);
@@ -147,7 +147,7 @@ function Rezervare() {
   const fetchTeam = async (person) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/personal/getTeam?person=${person}`
+        `https://estyllo.onrender.comapi/personal/getTeam?person=${person}`
       );
       const data = await response.json();
       const team = data.map((team) => team.echipa);
@@ -161,7 +161,7 @@ function Rezervare() {
   const handleShowDays = async (team) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/personal/get-schedule?team=${team}`
+        `https://estyllo.onrender.comapi/personal/get-schedule?team=${team}`
       );
       const data = await response.json();
 

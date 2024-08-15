@@ -24,7 +24,7 @@ const StaffAppointments = () => {
 
     const fetchStaff = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/personal/getAll');
+            const response = await fetch('https://estyllo.onrender.comapi/personal/getAll');
             const data = await response.json();
             console.log('Staff Data:', data); // Ensure this is correctly formatted
             setStaffList(data);
@@ -36,7 +36,7 @@ const StaffAppointments = () => {
     const fetchAppointments = async (staff) => {
         
         try {
-            const response = await fetch(`http://localhost:3000/api/appointments/getStaffAppointments?personal=${staff}`);
+            const response = await fetch(`https://estyllo.onrender.comapi/appointments/getStaffAppointments?personal=${staff}`);
             const data = await response.json();
             setAppointments(data);
         } catch (error) {
