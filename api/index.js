@@ -5,17 +5,13 @@ import reviewsRouter from './routes/reviews.routes.js';
 import cors from 'cors';
 import preturiRouter from "./routes/preturi.routes.js";
 import programariRouter from "./routes/programari.route.js";
-import path from "path"
-import dotenv from "dotenv"
+import path from "path";
+import dotenv from "dotenv";
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
-
-app.listen(3000, () => {
-    console.log("Server is running on port 3000!!!")
-});
 
 const db = mysql.createPool({
     host: process.env.DB_HOST, 
@@ -32,7 +28,7 @@ db.getConnection((err, conn) => {
         console.error("Error connecting to the database:", err.message);
         return;
     }
-    console.log("Connected successfully");
+    console.log("Connected successfully to estyllo database");
 });
 
 const __dirname = path.resolve();
@@ -46,15 +42,23 @@ const corsOptions = {
     credentials: true
 };
 
-// Uncomment these lines if you're serving the front-end from the same server
-// app.use(express.static(path.join(__dirname,"/client/dist")))
-// app.get('*',(req,res)=> {
-//     res.sendFile(path.join(__dirname,'client', 'dist', 'index.html'))
-// })
-
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// API routes
 app.use("/api/personal", personalRouter);
 app.use("/api/reviews", reviewsRouter);
 app.use("/api/preturi", preturiRouter);
 app.use("/api/appointments", programariRouter);
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
+
+// Catch-all handler for any requests not handled by the API routes
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
+
+app.listen(3000, () => {
+    console.log("Server is running on port 3000!!!");
+});

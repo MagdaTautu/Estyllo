@@ -9,7 +9,7 @@ function Home() {
 
   const fetchGoogleReviews = async () => {
     try {
-        const response = await fetch('http://localhost:3000/api/reviews/getReviews');
+        const response = await fetch('https://estyllo.onrender.com/:3000/api/reviews/getReviews');
         const data = await response.json();
         setReviews(data);
     } catch (error) {
