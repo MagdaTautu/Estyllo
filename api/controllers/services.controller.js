@@ -6,7 +6,8 @@ export const getAllServices = async (req,res,next) => {
     db.query(query, (err, results) => {
         if (err) {
             console.error("Error executing query:", err.message);
-            res.status(500).send("Server error");
+            res.status(500).json({ success: false, message: 'Server error' });
+
             return;
         }
         res.json(results);
@@ -19,7 +20,8 @@ export const getCoaforPrices = async (req, res, next) => {
     db.query(query, (err, results) => {
         if (err) {
             console.error("Error executing query:", err.message);
-            res.status(500).send("Server error");
+            res.status(500).json({ success: false, message: 'Server error' });
+
             return;
         }
         res.json(results);
@@ -32,7 +34,8 @@ export const getFrizeriePrices = async (req, res, next) => {
     db.query(query, (err, results) => {
         if (err) {
             console.error("Error executing query:", err.message);
-            res.status(500).send("Server error");
+            res.status(500).json({ success: false, message: 'Server error' });
+
             return;
         }
         res.json(results);
@@ -45,7 +48,8 @@ export const getManipediPrices = async (req, res, next) => {
     db.query(query, (err, results) => {
         if (err) {
             console.error("Error executing query:", err.message);
-            res.status(500).send("Server error");
+            res.status(500).json({ success: false, message: 'Server error' });
+
             return;
         }
         res.json(results);
@@ -59,7 +63,7 @@ export const getVopsitPrices = async (req, res, next) => {
     db.query(query, (err, results) => {
         if (err) {
             console.error("Error executing query:", err.message);
-            res.status(500).send("Server error");
+            res.status(500).json({ success: false, message: 'Server error' });
             return;
         }
         res.json(results);
@@ -72,7 +76,7 @@ export const getCosmeticaFemeiPrices = async (req, res, next) => {
     db.query(query, (err, results) => {
         if (err) {
             console.error("Error executing query:", err.message);
-            res.status(500).send("Server error");
+            res.status(500).json({ success: false, message: 'Server error' });
             return;
         }
         res.json(results);
@@ -85,7 +89,8 @@ export const getCosmeticaBarbatiPrices = async (req, res, next) => {
     db.query(query, (err, results) => {
         if (err) {
             console.error("Error executing query:", err.message);
-            res.status(500).send("Server error");
+            res.status(500).json({ success: false, message: 'Server error' });
+            
             return;
         }
         res.json(results);
@@ -107,7 +112,8 @@ export const getGeneralPrices = async (req, res, next) => {
     db.query(query, [service_name], (err, results) => {
         if (err) {
             console.error("Error executing query:", err.message);
-            res.status(500).send("Server error");
+            res.status(500).json({ success: false, message: 'Server error' });
+
             return;
         }
         res.json(results);

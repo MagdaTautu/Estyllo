@@ -10,6 +10,19 @@ function Preturi() {
   const [pricesCosmeticaFemei, setPricesCosmeticaFemei] = useState([]);
   const [pricesCosmeticaBarbati, setPricesCosmeticaBarbati] = useState([]);
 
+  const fetchPrices = async (url, setPrices) => {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setPrices(data);
+    } catch (error) {
+        console.error("Error fetching prices:", error.message);
+    }
+};
+
   const fetchCoaforPrices = async () => {
     try {
       const response = await fetch('https://estyllo.onrender.com/api/preturi/coafor');
@@ -48,15 +61,22 @@ function Preturi() {
       console.error("Error fetching prices:", error);
     }
   };
-  const fetchCosmeticaFemeiPrices = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com/api/preturi/cosmeticafemei');
-      const data = await response.json();
-      setPricesCosmeticaFemei(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
+
+  
+  // const fetchCosmeticaFemeiPrices = async () => {
+  //   try {
+  //     const response = await fetch('https://estyllo.onrender.com/api/preturi/cosmeticafemei');
+  //     console.log(response.json())
+  //     const data = await response.json();
+  //     setPricesCosmeticaFemei(data);
+  //   } catch (error) {
+  //     console.error("Error fetching prices:", error);
+  //   }
+  // };
+
+  const fetchCosmeticaFemeiPrices = () => {
+    fetchPrices('https://estyllo.onrender.com/api/preturi/cosmeticafemei', setPricesCosmeticaFemei);
+};
   const fetchCosmeticaBarbatiPrices = async () => {
     try {
       const response = await fetch('https://estyllo.onrender.com/api/preturi/cosmeticabarbati');
