@@ -76,16 +76,19 @@ function Preturi() {
 
   const fetchCosmeticaFemeiPrices = () => {
     fetchPrices('https://estyllo.onrender.com/api/preturi/cosmeticafemei', setPricesCosmeticaFemei);
-};
-  const fetchCosmeticaBarbatiPrices = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com/api/preturi/cosmeticabarbati');
-      const data = await response.json();
-      setPricesCosmeticaBarbati(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
   };
+  const fetchCosmeticaBarbatiPrices = () => {
+    fetchPrices('https://estyllo.onrender.com/api/preturi/cosmeticabarbati', setPricesCosmeticaBarbati);
+  };
+  // const fetchCosmeticaBarbatiPrices = async () => {
+  //   try {
+  //     const response = await fetch('https://estyllo.onrender.com/api/preturi/cosmeticabarbati');
+  //     const data = await response.json();
+  //     setPricesCosmeticaBarbati(data);
+  //   } catch (error) {
+  //     console.error("Error fetching prices:", error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchCoaforPrices();
