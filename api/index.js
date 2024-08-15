@@ -8,29 +8,34 @@ import programariRouter from "./routes/programari.route.js";
 import path from "path"
 import dotenv from "dotenv"
 
+// Load environment variables
 dotenv.config();
+
 const app = express();
 
 app.listen(3000, () => {
     console.log("Server is running on port 3000!!!")
 });
 
-const db = mysql.createConnection({
-    host: process.env.DB_HOST , 
-    user: process.env.DB_USER ,
-    password: process.env.DB_PASS ,
-    database: process.env.DB_NAME 
+const db = mysql.createPool({
+    host: process.env.DB_HOST, 
+    user: process.env.DB_USER, 
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DBNAME,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
-console.log(process.env.DB_USER)
-db.connect((err) => {
+
+db.getConnection((err, conn) => {
     if (err) {
         console.error("Error connecting to the database:", err.message);
         return;
     }
-    console.log("Connected to the estyllo database");
+    console.log("Connected successfully");
 });
 
-const __dirname = path.resolve()
+const __dirname = path.resolve();
 app.set('db', db);
 
 const corsOptions = {
@@ -40,11 +45,12 @@ const corsOptions = {
     },
     credentials: true
 };
+
+// Uncomment these lines if you're serving the front-end from the same server
 // app.use(express.static(path.join(__dirname,"/client/dist")))
 // app.get('*',(req,res)=> {
 //     res.sendFile(path.join(__dirname,'client', 'dist', 'index.html'))
 // })
-
 
 app.use(cors(corsOptions));
 app.use(express.json());
