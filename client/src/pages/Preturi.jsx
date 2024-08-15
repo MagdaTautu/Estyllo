@@ -75,7 +75,7 @@ function Preturi() {
   // };
 
   const fetchCosmeticaFemeiPrices = () => {
-    fetchPrices('https://estyllo.onrender.com/api/preturi/cosmeticafemei', setPricesCosmeticaFemei);
+    fetchPrices('http://localhost:3000/api/preturi/cosmeticafemei', setPricesCosmeticaFemei);
   };
   const fetchCosmeticaBarbatiPrices = () => {
     fetchPrices('https://estyllo.onrender.com/api/preturi/cosmeticabarbati', setPricesCosmeticaBarbati);
