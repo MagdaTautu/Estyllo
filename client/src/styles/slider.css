@@ -54,13 +54,17 @@
 /* .slider-container:dra .slider-list {
     transform: translateX(-50%);
 } */
+#slider .slider-container .slider ul li {
+    pointer-events: none;
+}
 
 #slider .slider-container .slider ul li div span.span{
     align-self: center;
     color: #000;
 }
-#slider .slider-container .slider ul li{
+#slider .slider-container .slider ul li.slider-item.highlighted{
     cursor: pointer;
+    pointer-events: all;
 }
 
 #slider .slider-container .slider ul li div span.span.day-name{
@@ -100,6 +104,8 @@
 
 .hours-container {
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .hours-list {
@@ -117,4 +123,46 @@
 
 .hour-item:hover {
     background-color: #ddd;
+}
+
+button.rezervare{
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    color: #000;
+    font-weight: 600;
+    background-color: rgb(255, 191, 72);
+    border: none;
+    cursor: pointer;
+}
+
+#slider form{
+    display: none;
+    padding: 30px;
+    border-radius: 10px;
+    align-self: center;
+}
+
+#slider form input, #slider form textarea{
+    padding: 10px;
+}
+#slider form p{
+    font-size: 1.1rem;
+    font-family: Inter-med;
+}
+
+#slider form.visible{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1E272E;
+    width: 300px;
+    color: #f0f0f0;
+    margin-top: 20px;
+}
+
+#slider form.visible div{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
 }

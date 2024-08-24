@@ -4,7 +4,7 @@ export const getAllAppointments = async (req, res, next) => {
     const db = req.app.get('db');
 
     try {
-        const query = `SELECT id, personal, date, hour, status FROM programari ORDER BY date, hour`;
+        const query = `SELECT id, personal, date, hour, status, service, user_email, user_phone FROM programari ORDER BY date, hour`;
         db.query(query, (err, results) => {
             if (err) {
                 console.error("Error fetching appointments:", err.message);
@@ -21,16 +21,15 @@ export const getAllAppointments = async (req, res, next) => {
 
 export const bookAppointment = async (req, res, next) => {
     const db = req.app.get('db');
-    const { personal, date, hour } = req.body;
+    const { personal, date, hour, service,user_email,user_phone } = req.body;
 
-    if (!personal || !date || !hour) {
-        res.status(400).send("Personal, date, and hour are required");
+    if (!personal || !date || !hour || !service || !user_email || !user_phone) {
+        res.status(400).send("Personal, date, hour. servicse are required");
         return;
     }
-
     try {
-        const query = `INSERT INTO programari (personal, date, hour, status) VALUES (?, ?, ?, 'pending')`;
-        await db.query(query, [personal, date, hour]);
+        const query = `INSERT INTO programari (personal, date, hour, status, service, user_email,user_phone) VALUES (?, ?, ?, 'in asteptare', ?, ? , ?)`;
+        await db.query(query, [personal, date, hour, service, user_email,user_phone]);
         res.status(201).send("Appointment booked successfully");
     } catch (error) {
         console.error("Error booking appointment:", error.message);
@@ -48,7 +47,7 @@ export const approveAppointment = async (req, res, next) => {
     }
 
     try {
-        const query = `UPDATE programari SET status = 'approved' WHERE id = ?`;
+        const query = `UPDATE programari SET status = 'acceptata' WHERE id = ?`;
         await db.query(query, [id]);
 
         // Optionally, remove the slot from available_hours (not implemented here)
@@ -60,6 +59,28 @@ export const approveAppointment = async (req, res, next) => {
         res.status(500).send("Failed to approve appointment");
     }
 };
+
+export const rescheduleAppointment = async (req, res, next) => {
+    const db = req.app.get('db');
+    const { current_hour, current_date, personal } = req.query; // Using req.query instead of req.params
+    const { hour, date } = req.body;
+    if (!current_hour || !current_date || !personal || !hour || !date) {
+        res.status(400).send("All parameters (current_hour, current_date, personal, hour, date) are required");
+        return;
+    }
+
+    try {
+        const query = `UPDATE programari SET hour = ?, date = ? WHERE personal = ? AND hour = ? AND date = ?`;
+        await db.query(query, [hour, date, personal, current_hour, current_date]);
+
+        res.status(200).send("Appointment rescheduled successfully");
+    } catch (error) {
+        console.error("Error rescheduling appointment:", error.message);
+        res.status(500).send("Failed to reschedule appointment");
+    }
+};
+
+
 
 export const cancelAppointment = async (req, res, next) => {
     const db = req.app.get('db');
@@ -81,6 +102,9 @@ export const cancelAppointment = async (req, res, next) => {
 };
 
 
+
+
+
 export const getAvailableHours = async (req, res, next) => {
     const db = req.app.get('db');
     const { personal, date } = req.query;
@@ -89,7 +113,7 @@ export const getAvailableHours = async (req, res, next) => {
     }
 
     try {
-        const query = `SELECT hour FROM programari WHERE personal = ? AND date = ? AND status = 'approved'`;
+        const query = `SELECT hour FROM programari WHERE personal = ? AND date = ? AND status = 'acceptata'`;
         db.query(query, [personal, date], (err, results) => {
             if (err) {
                 console.error("Error fetching booked hours:", err.message);
@@ -105,10 +129,6 @@ export const getAvailableHours = async (req, res, next) => {
                 allHours.push(`${hour}:00`);
             }
 
-            // Log for debugging purposes
-            // console.log("Booked Hours:", bookedHours);
-            // console.log("All Hours:", allHours);
-
             // Filter out the booked hours
             const availableHours = allHours.filter(hour => !bookedHours.includes(hour));
 
@@ -120,18 +140,42 @@ export const getAvailableHours = async (req, res, next) => {
     }
 };
 
+export const getService = async (req, res, next) => {
+    const db = req.app.get('db');
+    const nume = req.query.nume;
+
+    if (!nume) {
+        res.status(400).send("Service name is required");
+        return;
+    }
+
+    const query = `SELECT serviciu FROM personal WHERE nume = ?`; 
+    db.query(query, [nume], (err, results) => {
+        if (err) {
+            console.error("Error executing query:", err.message);
+            res.status(500).send("Server error");
+            return;
+        }
+        res.json(results);
+    });
+};
 
 
 export const getStaffAppointments = async (req, res, next) => {
     const db = req.app.get('db');
-    const { personal } = req.query;
+    const { personal, date } = req.query;
 
-    let query = `SELECT id, personal, date, hour, status FROM programari`;
+    let query = `SELECT id, personal, date, hour, status FROM programari WHERE 1=1`;
     const queryParams = [];
 
     if (personal) {
-        query += ` WHERE personal = ?`;
+        query += ` AND personal = ?`;
         queryParams.push(personal);
+    }
+
+    if (date) {
+        query += ` AND date = ?`;
+        queryParams.push(date);
     }
 
     query += ` ORDER BY date, hour`;

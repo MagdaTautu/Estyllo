@@ -1,0 +1,191 @@
+.programari button{
+   margin: 20px;
+}
+
+.programari table button
+{
+    padding: 10px;
+    margin: 0 10px;
+    cursor: pointer;
+    background-color: rgb(183, 0, 0);
+    color: #fff;
+}
+
+
+.programari table button.approve{
+    background-color: rgb(3, 193, 3);
+    color: #fff;
+}
+
+
+.programari table button.reschedule{
+    background-color: rgb(3, 101, 193);
+    color: #fff;
+}
+
+.programari{
+    padding: 20px;
+}
+
+
+.programari  div.hide{
+    min-height: 50px;
+    display: none;
+}
+
+.programari  div.hide.mobile{
+    display: block;
+}
+
+.programari td.mobile{
+    background: url("../assets/images/icons/arrow_down.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.programari td.actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.programari form.visible{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    align-items: center;
+    margin: 100px 0;
+    padding: 50px 20px;
+    background-color: #fff;
+    width: 400px;
+}
+.programari form div label{
+    font-weight: 600;
+    font-family: Inter-med;
+    margin-bottom: 8px;
+}
+
+.programari form div input{
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid gray;
+    box-shadow: 0 8px 6px -6px black;
+    border: 1px solid rgb(223, 223, 223);
+}
+
+
+@media only screen and (max-width: 480px) {
+    /* Styles for mobile phones */
+    .programari  div.mobile{
+        min-height: 50px;
+    
+    }
+  }
+  
+  .programari form{
+    display: none;
+    
+  }
+
+  .programari form input.send{
+    padding: 10px 20px;
+  }
+
+
+  /* Small Devices (Large Phones) */
+  @media only screen and (min-width: 481px) and (max-width: 767px) {
+    /* Styles for large phones */
+    .programari  div.mobile{
+        min-height: 50px;
+        
+    }
+  }
+  
+  
+  /* Medium Devices (Tablets) */
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablets */
+  }
+  
+  /* Large Devices (Laptops, Small Desktops) */
+  @media only screen and (min-width: 1025px) and (max-width: 1440px) {
+    /* Styles for laptops and small desktops */
+  }
+  
+  /* Extra Large Devices (Large Desktops) */
+  @media only screen and (min-width: 1441px) {
+    /* Styles for large desktops */
+  }
+  
+
+
+
+
+
+
+
+
+#contact{
+    padding-top: 200px ;
+    min-height: 60vh;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+#contact h1{
+    width: 70%;
+    text-align: center;
+}
+
+#contact form{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    margin: 100px 0;
+    padding: 50px 20px;
+    background-color: #fff;
+    width: 400px;
+}
+
+#contact form div, .programari form div{
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+#contact form div label{
+    font-weight: 600;
+    font-family: Inter-med;
+    margin-bottom: 8px;
+}
+
+#contact form div input, #contact form div textarea{
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid gray;
+    box-shadow: 0 8px 6px -6px black;
+    border: 1px solid rgb(223, 223, 223);
+}
+
+#contact form div textarea{
+    min-height: 100px;
+}
+
+#contact form input.send{
+    padding: 10px;
+    width: 70%;
+    margin-top: 15px;
+    color: #fff;
+    background-color: #B30031;
+    border: 1px solid #fff;
+    font-family: Inter-med;
+    font-size: 1rem;
+}

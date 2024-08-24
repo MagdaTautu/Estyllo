@@ -101,10 +101,16 @@ html{
     padding: 10px 20px;
     border: 2px solid rgb(255, 191, 72);
     border-radius: 15px;
+    font-weight: 800;
+    font-family: Inter-med;
+    text-transform: uppercase;
+    pointer-events: none;
 }
 
 #rezervare .header button#prev {
     margin-right: 30px;
+    pointer-events: all;
+    cursor: pointer;
 }
 
 #rezervare .header .title {
@@ -113,12 +119,38 @@ html{
     margin-right: 20px;
 }
 
-#rezervare .header button#next {
-    background-color: rgb(255, 191, 72);
-    color: #000;
+#rezervare .header button#next.inactive {
+    /*  */
+    background-color: rgb(194, 194, 194);
+    border: none;
+    color: #fff;
     font-weight: 800;
     font-family: Inter-med;
     text-transform: uppercase;
+    pointer-events: none;
+}
+#rezervare .header button#next.active{
+    background-color: rgb(255, 191, 72);
+    pointer-events: all;
+    cursor: pointer;
+}
+
+#rezervare .header button#next.none{
+    display: none;
+}
+
+
+#rezervare .header .right.inactive:hover p.info{
+   display: block;
+    cursor: pointer;
+}
+
+#rezervare .header p.info{
+    position: absolute;
+    background-color: #1E272E;
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
 }
 
 
@@ -181,10 +213,28 @@ html{
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 22;
+}
+
+#rezervare  .bottom .right.final h1{
+    color: #f0f0f0;
+    text-align: center;
+}
+
+#rezervare  .bottom .right.final a{
+    color: #1E272E;
+    font-weight: 600;
+    text-decoration: none;
+    background-color: rgb(255, 191, 72);
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 10px;
 }
 
 #rezervare  .bottom .content{
@@ -197,6 +247,24 @@ html{
     flex-direction: row;
     align-items: center;
 
+}
+
+#rezervare  .bottom .right .mobile{
+    display: none;
+}
+
+#rezervare  .bottom .right .mobile.final{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#rezervare  .bottom .right .top.final{
+    display: none;
+}
+
+#rezervare  .bottom .right .bottom.final{
+    display: none;
 }
 
 #rezervare  .bottom .right .top img{
@@ -270,7 +338,17 @@ html{
     font-size: 1.5rem;
     font-family: Inter-med;
 }
-
+#rezervare  .bottom .right.final p {
+    color: #f0f0f0;
+    margin: 20px 0;
+    line-height:20px;
+}
+#rezervare  .bottom .right.final p a{
+    background-color: #1E272E;
+    color: #fff;
+    padding: 0;
+    margin-top: 20px;
+}
 
 
 /* Extra Small Devices (Mobile Phones) */
@@ -286,11 +364,46 @@ html{
     #rezervare .bottom .content{
         width: 100%;
     }
+    #rezervare .content .page{
+        padding: 20px;
+    }
+    #rezervare .header {
+       
+        padding: 20px;
+        width: 100%;
+        border-radius: 20px;
+        position: fixed;
+        z-index: 20;
+        left: 50%;
+        transform: translate(-50%, -103%);
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    #rezervare .header p{
+        display: none;
+    }
+    #rezervare .header p.title{
+        font-size: 1rem;
+        display: inline;
+    }
+    #rezervare  .bottom .right.final{
+        width: 90%;
+        min-height: 400px;
+    }
+
+    #rezervare  .bottom .right.final h1{
+       font-size: 1.3rem;
+    }
+    
+    
   }
   
   /* Small Devices (Large Phones) */
   @media only screen and (min-width: 481px) and (max-width: 767px) {
     /* Styles for large phones */
+    #rezervare .content .page{
+        padding: 20px;
+    }
     #rezervare  .bottom{
         padding: 0;
     }
@@ -301,6 +414,17 @@ html{
     #rezervare .bottom .content{
         width: 100%;
     }
+    #rezervare .header p{
+        display: none;
+    }
+    #rezervare .header p.title{
+        font-size: 1rem;
+        display: inline;
+    }
+    #rezervare  .bottom .right.final h1{
+        font-size: 1.6rem;
+     }
+     
   }
   
   /* Medium Devices (Tablets) */
@@ -317,6 +441,9 @@ html{
     #rezervare .bottom .content{
         width: 100%;
     }
+    #rezervare  .bottom .right.final h1{
+        font-size: 1.8rem;
+     }
   }
   
   /* Large Devices (Laptops, Small Desktops) */

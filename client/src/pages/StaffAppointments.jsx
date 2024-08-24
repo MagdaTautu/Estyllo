@@ -1,42 +1,44 @@
-// StaffAppointments.jsx
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import "../styles/program.css";
 
-import "../styles/program.css"
 const StaffAppointments = () => {
     const [appointments, setAppointments] = useState([]);
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const staffName = queryParams.get('staff') || ''; // Extract staff name from URL query parameter
-    const [staff, setStaffName] = useState('');
-    const navigate = useNavigate();
+    const staffName = queryParams.get('staff') || '';
+    const [staff, setStaffName] = useState(staffName);
+    const [date, setDate] = useState(queryParams.get('date') || ''); // New state for date filter
     const [staffList, setStaffList] = useState([]);
-
-    
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (staffName) {
-            fetchAppointments(staffName);
+        if (staff || date) {
+            fetchAppointments(staff, date);
         }
         fetchStaff();
-    }, [staffName]);
+    }, [staff, date]);
 
     const fetchStaff = async () => {
         try {
-            const response = await fetch('https://estyllo.onrender.com/api/personal/getAll');
+            const response = await fetch('https://estyllo.onrender.com:443/api/personal/getAll');
             const data = await response.json();
-            console.log('Staff Data:', data); // Ensure this is correctly formatted
             setStaffList(data);
         } catch (error) {
             console.error('Error fetching staff:', error);
         }
     };
-    
-    const fetchAppointments = async (staff) => {
-        
+
+    const fetchAppointments = async (staff, date) => {
         try {
-            const response = await fetch(`https://estyllo.onrender.com/api/appointments/getStaffAppointments?personal=${staff}`);
+            let url = `https://estyllo.onrender.com:443/api/appointments/getStaffAppointments?`;
+            const params = [];
+            if (staff) params.push(`personal=${staff}`);
+            if (date) params.push(`date=${date}`);
+            url += params.join('&');
+
+            const response = await fetch(url);
             const data = await response.json();
             setAppointments(data);
         } catch (error) {
@@ -48,37 +50,57 @@ const StaffAppointments = () => {
         setStaffName(event.target.value);
     };
 
-    const handleFilter = () => {
-        if (staff) {
-            navigate(`/admin/appointments?staff=${encodeURIComponent(staff)}`);
-        }
+    const handleDateChange = (event) => {
+        setDate(event.target.value);
     };
+
+    const handleFilter = () => {
+        const queryParams = new URLSearchParams();
+        if (staff) queryParams.append('staff', staff);
+        if (date) queryParams.append('date', date);
+        navigate(`/admin/appointments?${queryParams.toString()}`);
+        if(staff == "")
+        navigate('/admin/programari');
+    };
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
         return `${day}-${month}-${year}`;
     };
+
     return (
         <div className="programari">
-            <h1>Appointments for {staffName}</h1>
-            <select onChange={handleStaffChange} value={staffName}>
-                <option value="">Select Staff</option>
+            {
+                staff ? <h1>Programari pentru {staff}</h1> : (
+                    {date} ? <h1> Programari  in data de {date}</h1> : ""
+                )
+            }
+            <select onChange={handleStaffChange} value={staff}>
+                <option value="">Selecteaza personal</option>
                 {staffList.map((staff) => (
                     <option key={staff.name} value={staff.name}>
                         {staff.name}
                     </option>
                 ))}
             </select>
-            <button onClick={handleFilter}>Filter</button>
+            <input 
+                type="date" 
+                onChange={handleDateChange} 
+                value={date} 
+            />
+            <button onClick={handleFilter}>Filtreaza</button>
             {appointments.length > 0 ? (
                 <table>
                     <thead>
                         <tr>
+                            
+
                             <th>Personal</th>
-                            <th>Date</th>
-                            <th>Time</th>
+                            <th>Data</th>
+                            <th>Ora</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -94,7 +116,7 @@ const StaffAppointments = () => {
                     </tbody>
                 </table>
             ) : (
-                <p>No appointments found for {staffName}</p>
+                <p>Nu exista programari.</p>
             )}
         </div>
     );

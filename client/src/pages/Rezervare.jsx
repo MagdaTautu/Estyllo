@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, {useContext, useState, useEffect } from 'react';
+
 import "../styles/rezervare.css";
 import logo from "../assets/images/logo_mic.png";
 import DateSlider from "../components/DateSlider.jsx";
-import HourPicker from "../components/HourPicker";
+
 function Rezervare() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pricesCoafor, setPricesCoafor] = useState([]);
@@ -11,12 +12,11 @@ function Rezervare() {
   const [pricesManichiura, setPricesManichiura] = useState([]);
 
 
-
   const [activeCoaforIndex, setActiveCoaforIndex] = useState(null);
   const [activeManiIndex, setActiveManiIndex] = useState(null);
   const [activeCosmeticaFemeiIndex, setActiveCosmeticaFemei] = useState(null);
+  const [activeCosmeticaBarbatiIndex, setActiveCosmeticaBarbati] = useState(null);
   const [activeFrizerieIndex, setActiveFrizerieIndex] = useState(null);
-
 
 
   const [services, setServices] = useState([]);
@@ -29,7 +29,7 @@ function Rezervare() {
   const fetchPrices = async (service_name) => {
     try {
       const response = await fetch(
-        `https://estyllo.onrender.com/api/preturi/general?service=${service_name}`
+        `https://estyllo.onrender.com:3000/api/preturi/general?service=${service_name}`
       );
       const data = await response.json();
       if (service_name === "coafor_femei") {
@@ -55,11 +55,14 @@ function Rezervare() {
   const [personal, setPersonal] = useState({
     coafor_femei: [],
     frizerie: [],
+    mani_pedi: [],
+
   });
   const fetchPersonal = async (service_name) => {
+   
     try {
       const response = await fetch(
-        `https://estyllo.onrender.com/api/personal/getPersonal?service=${service_name}`
+        `https://estyllo.onrender.com:3000/api/personal/getPersonal?service=${service_name}`
       );
       const data = await response.json();
       const pers = data.map((person) => person.nume);
@@ -73,25 +76,37 @@ function Rezervare() {
       console.error("Error fetching personal:", error);
     }
   };
+  // console.log(personal)
 
-  const handleCheckCoafor = (index, service, price, type) => {
-    setActiveCoaforIndex(index);
+  const handleCheckService = (index, service, price, type) => {
+    if(service === "coafor")
+      setActiveCoaforIndex(index);
+    else if (service === "frizerie")
+      setActiveFrizerieIndex(index)
+
+    else if (service === "cosmetica_femei")
+      setActiveCosmeticaFemei(index);
+    
+    else if (service === "cosmetica_barbati")
+      setActiveCosmeticaBarbati(index);
+ 
+    else if (service === "mani_pedi")
+    {
+      console.log(service)
+      setActiveManiIndex(index);
+
+    }
+
+
     setServices([{ service, price, type }]);
     setTotal(price);
   };
 
-  const handleCheckFrizerie = (index, service, price, type) => {
-    setActiveFrizerieIndex(index);
-    setServices([{ service, price, type }]);
-    setTotal(price);
-  };
+  
 
-  const handleCheckCosmeticaFemei = (index, service, price, type) => {
-    setActiveCosmeticaFemei(index);
-    setServices([{ service, price, type }]);
-    setTotal(price);
-  };
   const handleSetTypes = (service) => {
+    // console.log(service)
+
     setType((prevServices) => {
       const serviceExists = prevServices.some((s) => s.service === service);
 
@@ -101,11 +116,22 @@ function Rezervare() {
       return prevServices;
     });
   };
+  const handleActive = () => {
+    if(currentIndex === 0 || currentIndex === 1)
+      setNextPage(true)
+    else 
+    setNextPage(false)
+  }
+
   const nextPage = () => {
-    if(currentIndex === 3)
-    setCurrentIndex(0)
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    if(currentIndex === 2)
+      setCurrentIndex(0)
     else{
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % 4);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % 3);
       services.forEach((serviceObj) => {
         fetchPersonal(serviceObj.type);
       });
@@ -122,47 +148,33 @@ function Rezervare() {
 
   const prevPage = () => {
     if(currentIndex === 0)
-    setCurrentIndex(3)
+    {
+      setCurrentIndex(0)
+    }
     else {
       setCurrentIndex((prevIndex) => (prevIndex - 1 ) % 3);
       
     }
-    if(currentIndex ===0){
-      setFinal("final")
-    }
-    else setFinal("")
+    
     setPersonal([]);
   }
-    
 
   const handleNavClick = (sectionId) => {
     setActiveNav(sectionId);
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    fetchPrices("coafor_femei");
-    fetchPrices("frizerie");
-    fetchPrices("cosmetica_femei");
-    fetchPrices("mani_pedi");
-  }, []);
+  
   const [selectedPersonal, setSelectedPersonal] = useState([]);
   const handlePersonalClick = (person) => {
-    setSelectedPersonal((prevSelected) => {
-      const isSelected = prevSelected.includes(person);
-      if (isSelected) {
-        return prevSelected.filter((item) => item !== person);
-      } else {
-        return [...prevSelected, person];
-      }
-    });
+    setSelectedPersonal([person]);
     fetchTeam(person);
   };
 
   const fetchTeam = async (person) => {
     try {
       const response = await fetch(
-        `https://estyllo.onrender.com/api/personal/getTeam?person=${person}`
+        `https://estyllo.onrender.com:3000/api/personal/getTeam?person=${person}`
       );
       const data = await response.json();
       const team = data.map((team) => team.echipa);
@@ -176,7 +188,7 @@ function Rezervare() {
   const handleShowDays = async (team) => {
     try {
       const response = await fetch(
-        `https://estyllo.onrender.com/api/personal/get-schedule?team=${team}`
+        `https://estyllo.onrender.com:3000/api/personal/get-schedule?team=${team}`
       );
       const data = await response.json();
 
@@ -191,7 +203,24 @@ function Rezervare() {
     }
   };
   const titles = ["Serviciile", "Specialistul", "Data"];
+  const [nextPageVar, setNextPage] = useState(false);
+  useEffect(() => {
+    fetchPrices("coafor_femei");
+    fetchPrices("frizerie");
+    fetchPrices("cosmetica_femei");
+    fetchPrices("mani_pedi");
+  }, []);
+  useEffect(() => {
+    
+    handleActive()
+  }, [currentIndex]);
 
+  const [selectedService, setSelectedService] = useState("")
+  const handleSetService = (service) =>{
+    setSelectedService(service)
+  }
+  const [date, setDate] = useState()
+  const [hour, setHour] = useState()
 
   return (
     <div id="rezervare">
@@ -202,13 +231,18 @@ function Rezervare() {
           </button>
           <p className="title">Alege {titles[currentIndex]}</p>
           <p>
-            Pasul <span>{currentIndex + 1}</span> din 4
+            Pasul <span>{currentIndex + 1}</span> din 3
           </p>
         </div>
-        <div className="right">
-          <button className="next" id="next" onClick={nextPage}>
-            Continua
+        <div className={`right ${nextPageVar === true  ? "active" : "inactive"}`}>
+          <button className={`next ${nextPageVar === true  ? "active" : "inactive"} ${currentIndex === 3  ? "none" : ""}`} id="next" onClick={nextPage}  >
+            
+            {
+             currentIndex === 2 ? " Finalizare" : "Continua"
+            }
+            
           </button>
+          <p className="info">Rezerva ora si ziua pentru a continua.</p>
         </div>
       </div>
 
@@ -265,13 +299,14 @@ function Rezervare() {
                         : ""
                     }
                     onClick={() => {
-                      handleCheckCoafor(
+                      handleCheckService(
                         index,
                         priceObj.serviciu,
                         priceObj.pret,
                         "coafor_femei"
                       );
                       handleSetTypes("coafor_femei");
+                      handleSetService(priceObj.serviciu)
                     }}
                     value="coafor_femei"
                   >
@@ -306,13 +341,14 @@ function Rezervare() {
                         : ""
                     }
                     onClick={() => {
-                      handleCheckFrizerie(
+                      handleCheckService(
                         index,
                         priceObj.serviciu,
                         priceObj.pret,
                         "frizerie"
                       );
                       handleSetTypes("frizerie");
+                      handleSetService(priceObj.serviciu)
                     }}
                     value="frizerie"
                   >
@@ -347,15 +383,16 @@ function Rezervare() {
                         : ""
                     }
                     onClick={() => {
-                      handleCheckFrizerie(
+                      handleCheckService(
                         index,
                         priceObj.serviciu,
                         priceObj.pret,
-                        "cosmetica_femei"
+                        "cosmetica"
                       );
-                      handleSetTypes("cosmetica_femei");
+                      handleSetTypes("cosmetica");
+                      handleSetService(priceObj.serviciu)
                     }}
-                    value="cosmetica_femei"
+                    value="cosmetica"
                   >
                     <div>
                       <div className="checkbox">
@@ -379,7 +416,7 @@ function Rezervare() {
             <div id="mani_pedi">
               <p className="title">Manichiura si Pedichiura</p>
               <ul className="prices">
-                {pricesCosmeticaFemei.map((priceObj, index) => (
+                {pricesManichiura.map((priceObj, index) => (
                   <li
                     key={index}
                     className={
@@ -388,13 +425,14 @@ function Rezervare() {
                         : ""
                     }
                     onClick={() => {
-                      handleCheckFrizerie(
+                      handleCheckService(
                         index,
                         priceObj.serviciu,
                         priceObj.pret,
                         "mani_pedi"
                       );
                       handleSetTypes("mani_pedi");
+                      handleSetService(priceObj.serviciu)
                     }}
                     value="mani_pedi"
                   >
@@ -419,9 +457,8 @@ function Rezervare() {
             </div>
           </div>
           <div className={`page ${currentIndex === 1 ? "active" : ""}`} id="select_specialist">
-            {/* <p>Personal</p> */}
 
-            <h1>Coafor</h1>
+            {personal.coafor_femei?.length>0 ? <h1>Coafor</h1> : ""}
             <ul className="prices">
               {personal.coafor_femei?.map((pers, index) => (
                 <li
@@ -430,10 +467,10 @@ function Rezervare() {
                   className={selectedPersonal.includes(pers) ? "selected" : ""}
                 >
                   <div>
-                    <div className="checkbox">
+                  <div className="checkbox">
                       <div
                         className={`inside ${
-                          selectedPersonal.includes(pers) ? "checked" : ""
+                          selectedPersonal[0] === pers ? "checked" : ""
                         }`}
                       ></div>
                     </div>
@@ -443,7 +480,7 @@ function Rezervare() {
               ))}
             </ul>
 
-            <h1>Frizerie</h1>
+            {personal.frizerie?.length>0 ? <h1>Frizerie</h1> : ""}
             <ul className="prices">
               {personal.frizerie?.map((pers, index) => (
                 <li
@@ -464,26 +501,72 @@ function Rezervare() {
                 </li>
               ))}
             </ul>
+            
+            {personal.mani_pedi?.length>0 ? <h1>Manichiura si Pedichiura</h1> : ""}
+            <ul className="prices">
+              {personal.mani_pedi?.map((pers, index) => (
+                <li
+                  key={index}
+                  onClick={() => handlePersonalClick(pers)}
+                  className={selectedPersonal.includes(pers) ? "selected" : ""}
+                >
+                  <div>
+                    <div className="checkbox">
+                      <div
+                        className={`inside ${
+                          selectedPersonal.includes(pers) ? "checked" : ""
+                        }`}
+                      ></div>
+                    </div>
+                    {pers}
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            {personal.cosmetica?.length>0 ? <h1>Cosmetica</h1> : ""}
+            <ul className="prices">
+              {personal.cosmetica?.map((pers, index) => (
+                <li
+                  key={index}
+                  onClick={() => handlePersonalClick(pers)}
+                  className={selectedPersonal.includes(pers) ? "selected" : ""}
+                >
+                  <div>
+                    <div className="checkbox">
+                      <div
+                        className={`inside ${
+                          selectedPersonal.includes(pers) ? "checked" : ""
+                        }`}
+                      ></div>
+                    </div>
+                    {pers}
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
+
+
+
+
           <div className={`page ${currentIndex === 2 ? "active" : ""}`} id="select_date">
             <p>Date disponibile</p>
-            <DateSlider highlightedDates={highlightedDates} selectedPersonal={selectedPersonal} />
+            <DateSlider setNextPage={setNextPage} highlightedDates={highlightedDates} selectedPersonal={selectedPersonal}  selectedService={selectedService} setDate={setDate}  setHour={setHour}/>
             {/* <HourPicker highlightedDates={highlightedDates}/> */}
           </div>
 
-          <div className={`page ${currentIndex === 3 ? "active" : ""}`} id="final">
           
-          </div>
         </div>
         <div className={`right ${final}`}>
-          <div className="top">
+          <div className={`top ${final}`}>
             <img src={logo} alt="" />
             <div className="info">
               <p className="title">Estyllo HAIR SALON</p>
               <p className="location"></p>
             </div>
           </div>
-          <div className="bottom">
+          <div className={`bottom ${final}`}>
             <div className="info">
               <ul>
                 {services.map((serviceObj, index) => (
@@ -499,7 +582,6 @@ function Rezervare() {
               <p>Total</p>
               <span>{total} RON</span>
               <p className="small">
-                {/* Personal: {selectedPersonal} */}
                 Personal : <br></br>
                 {selectedPersonal?.map((pers, index) => (
                   <>{pers} | </>
@@ -507,6 +589,12 @@ function Rezervare() {
               </p>
             </div>
           </div>
+          <div className={`mobile ${final}`}>
+            <h1>Te asteptam cu drag in data de {date} la ora {hour} pentru {selectedService}</h1>
+            <a href="/">Continua</a>
+            <p>In cazul in care doresti sa anulezi programarea, te rog sa accesezi sectiunea <a href="/contact">CONTACT</a>.</p>
+          </div>
+          
         </div>
       </div>
     </div>

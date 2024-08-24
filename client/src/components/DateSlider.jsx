@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
-import '../styles/slider.css'; // Import the CSS for the slider
+import React, { useContext ,useState, useEffect } from 'react';
 
-const DateSlider = ({ highlightedDates, selectedPersonal }) => {
+import '../styles/slider.css';
+
+
+const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedService, setDate, setHour }) => {
     const dates = getAugustDates();
     const [translateX, setTranslateX] = useState(0);
     const [selectedDate, setSelectedDate] = useState(null);
     const [availableHours, setAvailableHours] = useState([]);
     const [selectedTime, setSelectedTime] = useState(null);
+    const [user_email, setUserEmail] = useState(null);
+    const [user_phone, setUserPhone] = useState(null);
+    const [user_service, setUserService] = useState(null);
+    
+
 
     const handleNext = () => {
-        if (translateX !== -3000) {
+        if (translateX !== -443) {
             setTranslateX(translateX - 150);
         }
     };
@@ -19,6 +26,7 @@ const DateSlider = ({ highlightedDates, selectedPersonal }) => {
             setTranslateX(translateX + 150);
         }
     };
+
     const formatDateToYYYYMMDD = (dateStr) => {
         const date = new Date(dateStr);
         const year = date.getFullYear();
@@ -27,15 +35,17 @@ const DateSlider = ({ highlightedDates, selectedPersonal }) => {
     
         return `${year}-${month}-${day}`;
     };
+
     const handleDateClick = async (dateStr) => {
         setSelectedDate(dateStr);
 
         // Fetch available hours for the selected date and personal
         const formattedDateStr = formatDateToYYYYMMDD(dateStr);
         try {
-            const response = await fetch(`https://estyllo.onrender.com/api/appointments/available-hours?personal=${selectedPersonal}&date=${formattedDateStr}`);
+            const response = await fetch(`http://estyllo.onrender.com:443
+/api/appointments/available-hours?personal=${selectedPersonal}&date=${formattedDateStr}`);
             const data = await response.json();
-            console.log(data)
+            console.log("aaa", data);
 
             setAvailableHours(data.availableHours);
         } catch (error) {
@@ -43,30 +53,60 @@ const DateSlider = ({ highlightedDates, selectedPersonal }) => {
         }
     };
 
-    const handleBookAppointment = async () => {
-        const appointment = {
-            personal: selectedPersonal,
-            date: selectedDate,
-            hour: selectedTime,
-            status: 'pending',
-        };
-
-        try {
-            const response = await fetch('https://estyllo.onrender.com/api/appointments/create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(appointment),
-            });
-
-            if (response.ok) {
-                alert('Appointment booked successfully!');
-                // Update UI as needed, like redirecting to a confirmation page
-            } else {
-                alert('Failed to book appointment.');
-            }
-        } catch (error) {
-            console.error('Error booking appointment:', error);
+    const [visibleContactForm, setVisibleContactForm] = useState("");
+    const handleBookAppointment = async (e) => {
+        e.preventDefault();
+        console.log(user_email)
+        if(!user_email ){
+            alert("Pentru rezervare, completeaza datele de contact!")
         }
+        else {
+            const appointment = {
+                personal: selectedPersonal,
+                date: selectedDate,
+                hour: selectedTime,
+                status: 'in asteptare',
+                user_email: user_email,
+                user_phone: user_phone,
+                service: user_service,
+            };
+            
+            try {
+                const response = await fetch('https://estyllo.onrender.com:443/api/appointments/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(appointment),
+                });
+    
+                if (response.ok) {
+                    alert('Rezervare finalizata cu succes!');
+                    setNextPage(true);
+                    setDate(selectedDate);
+                    setHour(selectedTime);
+                } else {
+                    alert('Rezervare nereusita! Incearca din nou!');
+                }
+            } catch (error) {
+                console.error('Error booking appointment:', error);
+            }
+        }
+        
+    };
+
+    const handleSetVisibleContactForm = () => {
+        setVisibleContactForm(prev => (prev === "" ? "visible" : ""));
+    };
+
+const handleChange = (e) => {
+        const { value, name } = e.target;
+        if (name === "user_email") {
+            setUserEmail(value); // Update context
+        } else if (name === "user_phone") {
+            setUserPhone(value); // Update local state
+        } else if (name === "user_name") {
+            // handle name change...
+        }
+        setUserService(selectedService); // Update context
     };
 
     return (
@@ -99,7 +139,6 @@ const DateSlider = ({ highlightedDates, selectedPersonal }) => {
                 <button className="next" onClick={handleNext}></button>
             </div>
 
-            {/* Display available hours if a date is selected */}
             {selectedDate && (
                 <div className="hours-container">
                     <h3>Available Hours on {selectedDate}:</h3>
@@ -114,13 +153,30 @@ const DateSlider = ({ highlightedDates, selectedPersonal }) => {
                             </span>
                         ))}
                     </div>
-                    <button onClick={handleBookAppointment} disabled={!selectedTime}>Rezerva in data de {selectedDate} la ora {selectedTime}</button>
+                    <button onClick={handleSetVisibleContactForm} className="rezervare" disabled={!selectedTime}>
+                        Rezerva in data de {selectedDate} la ora {selectedTime}
+                    </button>
+                    <form className={`${visibleContactForm}`} onSubmit={handleBookAppointment}>
+                        <p>Completeaza informatiile de contact</p>
+                        <div>
+                            <label>Nume</label>
+                            <input type="text" name="user_name" onChange={handleChange} />
+                        </div>
+                        <div>
+                            <label>Email</label>
+                            <input type="email" name="user_email" onChange={handleChange} />
+                        </div>
+                        <div>
+                            <label>Telefon</label>
+                            <input type="tel" name="user_phone" onChange={handleChange} />
+                        </div>
+                        <input type="submit" value="Rezerva" className='send' />
+                    </form>
                 </div>
-            )}
+            )}  
         </div>
     );
 };
-
 
 const getAugustDates = () => {
     const dates = [];

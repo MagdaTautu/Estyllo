@@ -8,7 +8,7 @@ import Rezervare from './pages/Rezervare';
 import Program from './pages/Program.jsx';
 import Programari from './pages/Programari.jsx';
 import StaffAppointments from './pages/StaffAppointments.jsx';
-
+import Contact from './pages/Contact';
 function App() {
   const location = useLocation();
   
@@ -16,7 +16,7 @@ function App() {
   const shouldHideFooter = hideFooterPaths.includes(location.pathname);
 
   return (
-      <>
+    <>
           <Header />
           <Routes>
               <Route path='/' element={<Home />} />
@@ -25,9 +25,10 @@ function App() {
               <Route path='/program' element={<Program />} />
               <Route path='/admin/programari' element={<Programari />} />
               <Route path="/admin/appointments" element={<StaffAppointments />} />
+              <Route path="/contact" element={<Contact />} />
           </Routes>
           {!shouldHideFooter && <Footer />}
-      </>
+    </>
   );
 }
 

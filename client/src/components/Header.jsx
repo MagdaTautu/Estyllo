@@ -22,7 +22,7 @@ function Header() {
         <ul className='navbar'>
           <Link to={"/"}><li className='nav-item'>Pagina principala</li></Link>
           <Link to={"/preturi"}><li className='nav-item'>Preturi</li></Link>
-          <li className='nav-item'>Contact</li>
+          <Link to={"/contact"}><li className='nav-item'>Contact</li></Link>
           <Link to={"/rezervare"}><li id='rezervare'>Fa o rezervare</li></Link>
         </ul>
         <div className={`toggle-menu ${visible}`} onClick={toggleMenu}>
@@ -36,7 +36,7 @@ function Header() {
         
         <Link to={"/"}><li className='nav-item'>Pagina principala</li></Link>
         <Link to={"/preturi"}><li className='nav-item'>Preturi</li></Link>
-        <li className='nav-item'>Contact</li>
+        <Link to={"/contact"}><li className='nav-item'>Contact</li></Link>
         <Link to={"/rezervare"}><li id='rezervare'>Fa o rezervare</li></Link>
       </ul>
     </div>

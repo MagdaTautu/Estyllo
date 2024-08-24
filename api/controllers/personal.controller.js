@@ -41,6 +41,26 @@ export const getPersonal = async (req, res, next) => {
     });
 };
 
+export const getService = async (req, res, next) => {
+    const db = req.app.get('db');
+    const nume = req.query.nume;
+
+    if (!nume) {
+        res.status(400).send("Personal name is required");
+        return;
+    }
+
+    const query = `SELECT serviciu FROM personal WHERE nume = ?`; 
+    db.query(query, [nume], (err, results) => {
+        if (err) {
+            console.error("Error executing query:", err.message);
+            res.status(500).send("Server error");
+            return;
+        }
+        res.json(results);
+    });
+};
+
 
 export const getTeam = async (req, res, next) => {
     const db = req.app.get('db');
