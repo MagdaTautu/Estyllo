@@ -42,8 +42,7 @@ const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
         // Fetch available hours for the selected date and personal
         const formattedDateStr = formatDateToYYYYMMDD(dateStr);
         try {
-            const response = await fetch(`http://estyllo.onrender.com:443
-/api/appointments/available-hours?personal=${selectedPersonal}&date=${formattedDateStr}`);
+            const response = await fetch(`https://estyllo.onrender.com:443/api/appointments/available-hours?personal=${selectedPersonal}&date=${formattedDateStr}`);
             const data = await response.json();
             console.log("aaa", data);
 
