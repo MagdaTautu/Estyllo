@@ -127,13 +127,14 @@
 
 button.rezervare{
     margin-top: 20px;
-    padding: 10px;
+    padding: 20px 10px;
     border-radius: 10px;
     color: #000;
     font-weight: 600;
     background-color: rgb(255, 191, 72);
     border: none;
     cursor: pointer;
+    font-size: 1.1rem;
 }
 
 #slider form{
@@ -165,4 +166,36 @@ button.rezervare{
     display: flex;
     flex-direction: column;
     margin: 10px 0;
+}
+
+#slider form input.send{
+    margin-top: 20px;
+    padding: 10px 20px;
+    color: #000;
+    font-family: Inter-med;
+    font-size: 1rem;
+    border: 2px solid rgb(255, 191, 72);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#slider form input.send:hover{
+    background-color: rgb(255, 191, 72);
+}
+
+.hour-item {
+    padding: 10px;
+    cursor: pointer;
+    border: 2px solid transparent; 
+    border-radius: 4px;
+    margin: 5px;
+}
+
+.hour-item:hover {
+    border-color: #ddd;
+}
+
+.active-hour {
+    border-color: #000; 
+    background-color: #f0f0f0; 
 }
