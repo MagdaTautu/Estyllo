@@ -6,70 +6,97 @@ const ScheduleGenerator = () => {
     const [schedule, setSchedule] = useState([]);
 
     const generateSchedule = (startTeam) => {
-        const daysInMonth = 31; // For August
+        const today = new Date(); // Get current date
+        console.log(today.getDate())
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth(); 
+        const nextMonth = (currentMonth + 1) % 12; 
+        const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
+
+        const daysInCurrentMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+        const daysInNextMonth = new Date(nextYear, nextMonth + 1, 0).getDate(); 
+
         const schedule = [];
         let currentTeam = startTeam;
-        
-        const isWeekend = (day) => {
-            const date = new Date(2024, 7, day);
-            const dayOfWeek = date.getDay(); // 0 for Sunday, 6 for Saturday
-            return dayOfWeek === 6 || dayOfWeek === 0; // Saturday or Sunday
+
+        const isWeekend = (dayOfWeek, date) => {
+            console.log(dayOfWeek, date)
+            return dayOfWeek === 6 || dayOfWeek === 0; 
         };
-        
-        const getDayName = (day) => {
-            const date = new Date(2024, 7, day);
-            const dayNames = ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă'];
+
+        const dayNames = ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă'];
+
+        const getDayName = (date) => {
             return dayNames[date.getDay()];
         };
-        
+
         const formatDateForDB = (date) => {
-            return date.toISOString().split('T')[0]; // Convert to YYYY-MM-DD format
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
         };
-        
-        let day = 1;
-        while (day <= daysInMonth) {
-            const date = new Date(2024, 7, day);
-            schedule.push({
-                data: formatDateForDB(date),
-                zi: getDayName(day),
-                echipa: currentTeam
-            });
-        
-           
-            if (isWeekend(day)) {
-                let endOfPeriod = day + 2;
-                if (endOfPeriod > daysInMonth) {
-                    endOfPeriod = daysInMonth;
+
+        const addDaysToSchedule = (year, month, startDay, totalDays) => {
+            let day = startDay;
+            const date = new Date(year, month, day);
+            console.log(formatDateForDB(date))
+            while (day <= totalDays) {
+                const date = new Date(year, month, day);
+                schedule.push({
+                    data: formatDateForDB(date),
+                    zi: getDayName(date),
+                    echipa: currentTeam
+                });
+                const dayOfWeek = date.getDay();
+                if (isWeekend(dayOfWeek, date)) {
+                    console.log("weekend:",date, dayOfWeek)
+                    if(dayOfWeek === 0 )
+                    {
+                        var endOfPeriod = day + 1;
+                    }
+                    else 
+                    {
+                        var endOfPeriod = day + 2;
+                    }
+                        
+
+                    if (endOfPeriod > totalDays) {
+                        endOfPeriod = totalDays;
+                    }
+
+                    for (let d = day + 1; d <= endOfPeriod; d++) {
+                        const nextDate = new Date(year, month, d);
+                        schedule.push({
+                            data: formatDateForDB(nextDate),
+                            zi: getDayName(nextDate),
+                            echipa: currentTeam
+                        });
+                    }
+
+                    day = endOfPeriod + 1;
+                } else {
+                    day++;
                 }
-        
-                for (let d = day + 1; d <= endOfPeriod; d++) {
-                    const nextDate = new Date(2024, 7, d);
-                    schedule.push({
-                        data: formatDateForDB(nextDate), // Adjust field name to match backend
-                        zi: getDayName(d),         // Adjust field name to match backend
-                        echipa: currentTeam          // Adjust field name to match backend
-                    });
+
+                
+
+                if (day <= totalDays) {
+                    currentTeam = currentTeam === 'yellow' ? 'red' : 'yellow';
                 }
-        
-                day = endOfPeriod + 1;
-            } else {
-                day++;
             }
-        
-            // Switch team after the period
-            if (day <= daysInMonth) {
-                currentTeam = currentTeam === 'yellow' ? 'red' : 'yellow';
-            }
-        }
-        
+        };
+
+        addDaysToSchedule(currentYear, currentMonth, today.getDate(), daysInCurrentMonth);
+
+        addDaysToSchedule(nextYear, nextMonth, 1, daysInNextMonth);
+
         setSchedule(schedule);
     };
-    
-    
+
     const saveSchedule = async () => {
         try {
-            console.log(schedule)
-            const response = await fetch('https://estyllo.onrender.com/api/personal/save-schedule', {
+            const response = await fetch('https://estyllo.onrender.com:443/api/personal/save-schedule', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -87,7 +114,6 @@ const ScheduleGenerator = () => {
             alert('Failed to save schedule');
         }
     };
-    
 
     return (
         <div id="program">
@@ -113,9 +139,9 @@ const ScheduleGenerator = () => {
                 <tbody>
                     {schedule.map((entry, index) => (
                         <tr key={index}>
-                            <td>{entry.data}</td>  {/* Adjust field name to match backend */}
-                            <td>{entry.zi}</td>    {/* Adjust field name to match backend */}
-                            <td>{entry.echipa}</td> {/* Adjust field name to match backend */}
+                            <td>{entry.data}</td>
+                            <td>{entry.zi}</td>
+                            <td>{entry.echipa}</td>
                         </tr>
                     ))}
                 </tbody>

@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
-
+import React, { useState } from 'react';
 import '../styles/slider.css';
 
 const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedService, setDate, setHour }) => {
-    const dates = getAugustDates();
+    const dates = getDatesForNext10Days();
+    
     const [translateX, setTranslateX] = useState(0);
     const [selectedDate, setSelectedDate] = useState(null);
     const [availableHours, setAvailableHours] = useState([]);
@@ -13,7 +13,7 @@ const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
     const [user_service, setUserService] = useState(null);
 
     const handleNext = () => {
-        if (translateX !== -443) {
+        if (translateX !== -150 * (dates.length - 1)) {
             setTranslateX(translateX - 150);
         }
     };
@@ -32,6 +32,17 @@ const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
         return `${year}-${month}-${day}`;
     };
 
+    const formatHighlightedDates = (dates) => {
+        return dates.map(date => {
+            const formattedDate = new Date(date);
+            const year = formattedDate.getFullYear();
+            const month = String(formattedDate.getMonth() + 1).padStart(2, '0');
+            const day = String(formattedDate.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        });
+    };
+    const formattedHighlightedDates = formatHighlightedDates(highlightedDates);
+
     const handleDateClick = async (dateStr) => {
         setSelectedDate(dateStr);
 
@@ -39,7 +50,7 @@ const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
         try {
             const response = await fetch(`https://estyllo.onrender.com:443/api/appointments/available-hours?personal=${selectedPersonal}&date=${formattedDateStr}`);
             const data = await response.json();
-            console.log("aaa", data);
+            console.log("Available hours:", data);
 
             setAvailableHours(data.availableHours);
         } catch (error) {
@@ -106,8 +117,7 @@ const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
                 <div className="slider" style={{ transform: `translateX(${translateX}px)` }}>
                     <ul className="slider-list">
                         {dates.map((dateObj, index) => {
-                            const isHighlighted = highlightedDates.includes(dateObj.dateStr);
-
+                            const isHighlighted = formattedHighlightedDates.includes(dateObj.dateStr);
                             return (
                                 <li 
                                     key={index} 
@@ -126,8 +136,8 @@ const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
                 </div>
             </div>
             <div className="buttons"> 
-                <button className="prev" onClick={handlePrev}></button>
-                <button className="next" onClick={handleNext}></button>
+                <button className="prev" onClick={handlePrev} disabled={translateX === 0}></button>
+                <button className="next" onClick={handleNext} disabled={translateX === -150 * (dates.length - 1)}></button>
             </div>
 
             {selectedDate && (
@@ -169,29 +179,44 @@ const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
     );
 };
 
-const getAugustDates = () => {
+const getDatesForNext10Days = () => {
     const dates = [];
-    const year = new Date().getFullYear();
-    const month = 7; 
     const today = new Date();
-    const startDay = today.getDate();
 
-    for (let day = startDay; day <= 31; day++) {
-        const date = new Date(year, month, day);
-        const dateStr = `${year}-${month + 1}-${day}`; 
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth();
+    const currentDay = today.getDate();
+    const daysInCurrentMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    // Get remaining days of the current month
+    for (let i = currentDay; i <= daysInCurrentMonth; i++) {
+        const date = new Date(currentYear, currentMonth, i);
+        const day = date.getDate();
         const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
         const monthName = date.toLocaleDateString('en-US', { month: 'short' });
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; // Months are 0-based
+        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
         dates.push({ day, dayName, monthName, dateStr });
     }
 
-    for (let day = 1; day < startDay; day++) {
-        const date = new Date(year, month, day);
-        const dateStr = `${year}-${month + 1}-${day}`; 
+    // Get the next 10 days of the next month
+    const nextMonth = (currentMonth + 1) % 12;
+    const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
+
+    for (let i = 1; i <= 10; i++) {
+        const date = new Date(nextYear, nextMonth, i);
+        const day = date.getDate();
         const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
         const monthName = date.toLocaleDateString('en-US', { month: 'short' });
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; // Months are 0-based
+        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
         dates.push({ day, dayName, monthName, dateStr });
     }
-    
+
     return dates;
 };
 

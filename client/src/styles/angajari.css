@@ -1,0 +1,23 @@
+#angajari{
+    position: relative;
+    padding-top: 100px;
+    min-height: 100vh;
+}
+
+#angajari .banner{
+    padding: 100px;
+    min-height: 400px;
+    background-image: url('../assets/images/angajari2.jpg');
+    
+}
+
+#angajari .banner p{
+    margin: auto;
+    text-align: center;
+    color: #fff;
+    font-size: 3rem;
+    font-weight: 600;
+    font-family: Inter-black;
+    letter-spacing: 4px;
+    text-transform: capitalize;
+}

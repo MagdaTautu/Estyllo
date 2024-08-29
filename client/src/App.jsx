@@ -9,6 +9,7 @@ import Program from './pages/Program.jsx';
 import Programari from './pages/Programari.jsx';
 import StaffAppointments from './pages/StaffAppointments.jsx';
 import Contact from './pages/Contact';
+import Angajari from './pages/Angajari';
 function App() {
   const location = useLocation();
   
@@ -26,6 +27,7 @@ function App() {
               <Route path='/admin/programari' element={<Programari />} />
               <Route path="/admin/appointments" element={<StaffAppointments />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/angajari" element={<Angajari />} />
           </Routes>
           {!shouldHideFooter && <Footer />}
     </>
