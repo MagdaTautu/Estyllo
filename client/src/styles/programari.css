@@ -10,13 +10,56 @@
     background-color: rgb(183, 0, 0);
     color: #fff;
 }
+.programari .header
+{
+    background-color: #1E272E;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 15px 45px;
+    width: 100%;
+    border-radius: 20px;
+    z-index: 20;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
 
+.programari .header h1{
+    margin-right: 50px;
+}
+
+.programari .header input, .programari .header select{
+    padding: 15px;
+    margin: 0 10px;
+    border: 2px solid #09131b;
+    outline: none;
+
+}
+
+.programari .header button{
+    background-color: rgb(255, 191, 72);
+    padding: 15px 40px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    font-family: Inter-med;
+    letter-spacing: 1px;
+    font-size: 1rem;
+    cursor: pointer;
+}
 
 .programari table button.approve{
     background-color: rgb(3, 193, 3);
     color: #fff;
 }
 
+.programari table tr{
+    border: 2px solid #1E272E;
+}
 
 .programari table button.reschedule{
     background-color: rgb(3, 101, 193);
@@ -35,6 +78,17 @@
 
 .programari  div.hide.mobile{
     display: block;
+}
+
+.programari table th{
+    height: 40px;
+    border: 4px solid #1E272E;
+}
+.programari td, th{
+    border: 4px solid #1E272E;
+    border-bottom: none;
+    border-top: none;
+    height: 80px;
 }
 
 .programari td.mobile{

@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import '../styles/slider.css';
 
-const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedService, setDate, setHour }) => {
+const DatePiclek = ({ highlightedDates, selectedPersonal, setNextPage, selectedService, setDate, setHour }) => {
     const dates = getDatesForNext10Days();
     
     const [translateX, setTranslateX] = useState(0);
     const [selectedDate, setSelectedDate] = useState(null);
-    const [availableHours, setAvailableHours] = useState([]);
+    const [availableHours, setAvailableHours] = useState(["9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00"]);
     const [selectedTime, setSelectedTime] = useState(null);
     const [user_email, setUserEmail] = useState(null);
     const [user_phone, setUserPhone] = useState(null);
-    const [user_name, setUserName] = useState(null);
     const [user_service, setUserService] = useState(null);
+    const [user_name, setUserName] = useState(null);
 
     const handleNext = () => {
         if (translateX !== -150 * (dates.length - 1)) {
@@ -33,6 +33,14 @@ const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
         return `${year}-${month}-${day}`;
     };
 
+
+    const formatDateToDDMMYYYY = (dateStr) => {
+        const date = new Date(dateStr);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate());
+        return `${day}.${month}.${year}`;
+    };
     const formatHighlightedDates = (dates) => {
         return dates.map(date => {
             const formattedDate = new Date(date);
@@ -46,17 +54,6 @@ const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
 
     const handleDateClick = async (dateStr) => {
         setSelectedDate(dateStr);
-
-        const formattedDateStr = formatDateToYYYYMMDD(dateStr);
-        try {
-            const response = await fetch(`https://estyllo.onrender.com:443/api/appointments/available-hours?personal=${selectedPersonal}&date=${formattedDateStr}`);
-            const data = await response.json();
-            console.log("Available hours:", data);
-
-            setAvailableHours(data.availableHours);
-        } catch (error) {
-            console.error('Error fetching available hours:', error);
-        }
     };
 
     const [visibleContactForm, setVisibleContactForm] = useState("");
@@ -66,16 +63,15 @@ const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
             alert("Pentru rezervare, completeaza datele de contact!");
         } else {
             const appointment = {
-                personal: selectedPersonal,
+                personal: "Niciun personal selectat",
                 date: selectedDate,
                 hour: selectedTime,
                 status: 'in asteptare',
                 user_email: user_email,
-                user_name: user_name,
                 user_phone: user_phone,
+                user_name: user_name,
                 service: user_service,
             };
-
             try {
                 const response = await fetch('https://estyllo.onrender.com:443/api/appointments/create', {
                     method: 'POST',
@@ -107,25 +103,24 @@ const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
             setUserEmail(value);
         } else if (name === "user_phone") {
             setUserPhone(value);
-        } else if (name === "user_name") {
+        } 
+        else if (name === "user_name") {
             setUserName(value)
         }
         setUserService(selectedService);
     };
-
     console.log(user_name)
 
     return (
-        <div id='slider'>
+        <div id='slider' className='slider2'>
             <div className="slider-container">
                 <div className="slider" style={{ transform: `translateX(${translateX}px)` }}>
                     <ul className="slider-list">
                         {dates.map((dateObj, index) => {
-                            const isHighlighted = formattedHighlightedDates.includes(dateObj.dateStr);
                             return (
                                 <li 
                                     key={index} 
-                                    className={`slider-item ${isHighlighted ? 'highlighted' : ''} ${selectedDate === dateObj.dateStr ? 'active' : ''}`}
+                                    className={`slider-item highlighted ${selectedDate === dateObj.dateStr ? 'active' : ''}`}
                                     onClick={() => handleDateClick(dateObj.dateStr)} 
                                 >
                                     <div className="date-info">
@@ -146,7 +141,7 @@ const DateSlider = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
 
             {selectedDate && (
                 <div className="hours-container">
-                    <h3>Available Hours on {selectedDate}:</h3>
+                    <h3>Ore disponibile {formatDateToDDMMYYYY(selectedDate)}:</h3>
                     <div className="hours-list">
                         {availableHours.map((hour, index) => (
                             <span 
@@ -224,4 +219,4 @@ const getDatesForNext10Days = () => {
     return dates;
 };
 
-export default DateSlider;
+export default DatePiclek;

@@ -1,5 +1,5 @@
 import express from 'express';
-import { approveAppointment,cancelAppointment , getAllAppointments, bookAppointment, getAvailableHours, getStaffAppointments,rescheduleAppointment} from '../controllers/programari.controller.js';
+import { approveAppointment,cancelAppointment , getAllAppointments, bookAppointment, getAvailableHours, getStaffAppointments,rescheduleAppointment, setPersonal} from '../controllers/programari.controller.js';
 
 const programariRouter = express.Router();
 programariRouter.get('/getAll', getAllAppointments);
@@ -9,6 +9,7 @@ programariRouter.post('/approve/:id', approveAppointment);
 programariRouter.post('/cancel/:id', cancelAppointment);
 
 programariRouter.post('/reschedule', rescheduleAppointment);
+programariRouter.post('/setPersonal', setPersonal);
 
 
 programariRouter.post('/create', bookAppointment);

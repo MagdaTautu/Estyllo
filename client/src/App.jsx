@@ -5,6 +5,7 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Preturi from './pages/Preturi';
 import Rezervare from './pages/Rezervare';
+import Rezervare_generic from './pages/Rezervare_generic';
 import Program from './pages/Program.jsx';
 import Programari from './pages/Programari.jsx';
 import StaffAppointments from './pages/StaffAppointments.jsx';
@@ -22,7 +23,8 @@ function App() {
           <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/preturi' element={<Preturi />} />
-              <Route path='/rezervare' element={<Rezervare />} />
+              {/* <Route path='/rezervare' element={<Rezervare />} /> */}
+              <Route path='/rezervare' element={<Rezervare_generic />} />
               <Route path='/program' element={<Program />} />
               <Route path='/admin/programari' element={<Programari />} />
               <Route path="/admin/appointments" element={<StaffAppointments />} />
