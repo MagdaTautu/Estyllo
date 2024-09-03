@@ -96,7 +96,7 @@ const ScheduleGenerator = () => {
 
     const saveSchedule = async () => {
         try {
-            const response = await fetch('https://estyllo.onrender.com:3000/api/personal/save-schedule', {
+            const response = await fetch('https://estyllo.onrender.com:443/api/personal/save-schedule', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
