@@ -11,6 +11,8 @@ import Programari from './pages/Programari.jsx';
 import StaffAppointments from './pages/StaffAppointments.jsx';
 import Contact from './pages/Contact';
 import Angajari from './pages/Angajari';
+
+
 function App() {
   const location = useLocation();
   

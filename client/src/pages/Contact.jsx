@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import "../styles/programari.css"
 import emailjs from '@emailjs/browser';
+import scissor from "../assets/images/services-icons.png"
+
 function Contact() {
     const form = useRef();
 
@@ -21,7 +23,15 @@ const sendEmail = (e) => {
     };
   return (
     <div id='contact'>
-
+        <div className="header">
+            <p className="subtitle">beauty salon</p>
+            <h1>CONTACT</h1>
+            <div className="subheader">
+                <div className="line"></div>
+                <img src={scissor} alt="" />
+                <div className="line"></div>
+            </div>
+        </div>
         <h1>Pentru informatii despre servicii si preturi, contactati-ne folosind urmatorul formular:</h1>
         <form ref={form} onSubmit={sendEmail}>
             <div>

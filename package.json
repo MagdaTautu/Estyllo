@@ -8,18 +8,22 @@
     "dev": "nodemon api/index.js",
     "start": "node api/index.js",
     "build": "npm install && npm install --prefix client && npm run build --prefix client"
-
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "expo": "^51.0.31",
     "express": "^4.19.2",
     "mysql": "^2.18.1",
+    "native-notify": "^4.0.4",
     "nodemon": "^3.1.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "expo-device": "~6.0.2",
+    "expo-notifications": "~0.28.16",
+    "expo-constants": "~16.0.2"
   }
 }

@@ -22,3 +22,29 @@ th, td {
 .programari {
     margin-top: 150px;
 }
+
+.programari  input, .programari  select{
+    padding: 15px;
+    margin: 0 10px;
+    border: 2px solid #09131b;
+    outline: none;
+
+}
+
+.programari  select{
+    margin: 0;
+}
+
+.programari  button{
+    background-color: rgb(255, 191, 72);
+    padding: 15px 40px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    font-family: Inter-med;
+    letter-spacing: 1px;
+    font-size: 1rem;
+    cursor: pointer;
+}

@@ -284,7 +284,7 @@ const [staffName, setStaffName] = useState("")
 };
     return (
         <div className='programari'>
-            <div className="header">
+            {/* <div className="header">
                 <h1>Toate programarile</h1>
                 <div>
                     <select onChange={handleStaffChange} value={staffName}>
@@ -299,8 +299,43 @@ const [staffName, setStaffName] = useState("")
                     <button onClick={handleFilter}>Filtrează</button>
                 </div>
                 
-            </div>
-            
+            </div> */}
+            <table className='header'>
+                <thead>
+                    <tr>
+                        <th>Toate programarile</th>
+                        <th className='flex-col'>
+                            <select onChange={handleStaffChange} value={staffName}>
+                            <option value="Niciun personal selectat">Selecteaza personal</option>
+                            {staffList.map((staff) => (
+                                <option key={staff.name} value={staff.name}>
+                                    {staff.name}
+                                </option>
+                            ))}
+                            </select>
+                        
+                            <input type="date" onChange={handleFilterDateChange} value={filterDate} />
+                            <button onClick={handleFilter}>Filtrează</button>
+                        </th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                        {/* <tr>
+                            <td>
+                        
+                            </td>
+                            <td>
+                        
+                            </td>
+                            <td>
+                        
+                            </td>
+                            
+                        </tr> */}
+                   
+                </tbody>
+            </table>
             <table>
                 <thead>
                     <tr>
