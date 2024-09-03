@@ -22,7 +22,7 @@ const StaffAppointments = () => {
 
     const fetchStaff = async () => {
         try {
-            const response = await fetch('https://estyllo.onrender.com:443/api/personal/getAll');
+            const response = await fetch('https://estyllo.onrender.com:3000/api/personal/getAll');
             const data = await response.json();
             setStaffList(data);
         } catch (error) {
@@ -32,7 +32,7 @@ const StaffAppointments = () => {
 
     const fetchAppointments = async (staff, date) => {
         try {
-            let url = `https://estyllo.onrender.com:443/api/appointments/getStaffAppointments?`;
+            let url = `https://estyllo.onrender.com:3000/api/appointments/getStaffAppointments?`;
             const params = [];
             if (staff) params.push(`personal=${staff}`);
             if (date) params.push(`date=${date}`);

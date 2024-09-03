@@ -35,7 +35,7 @@ const Programari = () => {
 
     const fetchStaff = async () => {
         try {
-            const response = await fetch('https://estyllo.onrender.com:443/api/personal/getAll');
+            const response = await fetch('https://estyllo.onrender.com:3000/api/personal/getAll');
             const data = await response.json();
             setStaffList(data);
         } catch (error) {
@@ -45,7 +45,7 @@ const Programari = () => {
 
     const fetchAppointments = async () => {
         try {
-            const response = await fetch('https://estyllo.onrender.com:443/api/appointments/getAll');
+            const response = await fetch('https://estyllo.onrender.com:3000/api/appointments/getAll');
             const data = await response.json();
             setAppointments(data.map(appointment => ({
                 ...appointment,
@@ -88,7 +88,7 @@ const [staffName, setStaffName] = useState("")
 
     const handleApprove = async (id,appointment) => {
         try {
-            const response = await fetch(`https://estyllo.onrender.com:443/api/appointments/approve/${id}`, {
+            const response = await fetch(`https://estyllo.onrender.com:3000/api/appointments/approve/${id}`, {
                 method: 'POST',
             });
 
@@ -136,7 +136,7 @@ const [staffName, setStaffName] = useState("")
         };
     const handleCancel = async (id, appointment) => {
         try {
-            const response = await fetch(`https://estyllo.onrender.com:443/api/appointments/cancel/${id}`, {
+            const response = await fetch(`https://estyllo.onrender.com:3000/api/appointments/cancel/${id}`, {
                 method: 'POST',
             });
 
@@ -178,7 +178,7 @@ const [staffName, setStaffName] = useState("")
         };
 
         try {
-            const response = await fetch(`https://estyllo.onrender.com:443/api/appointments/setPersonal`, {
+            const response = await fetch(`https://estyllo.onrender.com:3000/api/appointments/setPersonal`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(appointmentDetails),
@@ -266,7 +266,7 @@ const [staffName, setStaffName] = useState("")
     };
 
     try {
-        const response = await fetch(`https://estyllo.onrender.com:443/api/appointments/reschedule?current_hour=${current_hour}&current_date=${current_date}&personal=${selectedPersonal}`, {
+        const response = await fetch(`https://estyllo.onrender.com:3000/api/appointments/reschedule?current_hour=${current_hour}&current_date=${current_date}&personal=${selectedPersonal}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newAppointment),

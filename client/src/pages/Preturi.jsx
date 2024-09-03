@@ -36,7 +36,7 @@ function Preturi() {
 
   const fetchCoaforPrices = async () => {
     try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/coafor');
+      const response = await fetch('https://estyllo.onrender.com:3000/api/preturi/coafor');
       const data = await response.json();
       setPricesCoafor(data);
     } catch (error) {
@@ -46,7 +46,7 @@ function Preturi() {
 
   const fetchFrizeriePrices = async () => {
     try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/frizerie');
+      const response = await fetch('https://estyllo.onrender.com:3000/api/preturi/frizerie');
       const data = await response.json();
       setPricesFrizerie(data);
     } catch (error) {
@@ -56,7 +56,7 @@ function Preturi() {
 
   const fetchManiPediPrices = async () => {
     try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/manipedi');
+      const response = await fetch('https://estyllo.onrender.com:3000/api/preturi/manipedi');
       const data = await response.json();
       setPricesManiPedi(data);
     } catch (error) {
@@ -65,7 +65,7 @@ function Preturi() {
   };
   const fetchVopsitPrices = async () => {
     try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/vopsit');
+      const response = await fetch('https://estyllo.onrender.com:3000/api/preturi/vopsit');
       const data = await response.json();
       setPricesVopsit(data);
     } catch (error) {
@@ -76,7 +76,7 @@ function Preturi() {
   
   const fetchCosmeticaFemeiPrices = async () => {
     try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/cosmeticafemei');
+      const response = await fetch('https://estyllo.onrender.com:3000/api/preturi/cosmeticafemei');
       const data = await response.json();
       setPricesCosmeticaFemei(data);
     } catch (error) {
@@ -87,7 +87,7 @@ function Preturi() {
   
     const fetchCosmeticaBarbatiPrices = async () => {
       try {
-        const response = await fetch('https://estyllo.onrender.com:443/api/preturi/cosmeticabarbati');
+        const response = await fetch('https://estyllo.onrender.com:3000/api/preturi/cosmeticabarbati');
         const data = await response.json();
         setPricesCosmeticaBarbati(data);
       } catch (error) {
