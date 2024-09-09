@@ -77,7 +77,7 @@ function Preturi() {
 
   const fetchVopsitPachete = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/preturi/vopsit/pachete-fara');
+      const response = await fetch('http://localhost:443/api/preturi/vopsit/pachete-fara');
       const data = await response.json();
       
       setPachetVopsit(data);
@@ -85,7 +85,7 @@ function Preturi() {
       console.error("Error fetching prices:", error);
     }
     try {
-      const response = await fetch('http://localhost:3000/api/preturi/vopsit/pachete');
+      const response = await fetch('http://localhost:443/api/preturi/vopsit/pachete');
       const data = await response.json();
       console.log(data)
       setPachetVopsitFara(data);

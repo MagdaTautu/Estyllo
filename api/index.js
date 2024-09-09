@@ -52,14 +52,12 @@ app.use("/api/reviews", reviewsRouter);
 app.use("/api/preturi", preturiRouter);
 app.use("/api/appointments", programariRouter);
 
-// Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
-// Catch-all handler for any requests not handled by the API routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
 
-app.listen(3000, () => {
-    console.log("Server is running on port 3000!!!");
+app.listen(443, () => {
+    console.log("Server is running on port 443!!!");
 });
