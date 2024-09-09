@@ -56,6 +56,8 @@ const Programari = () => {
         }
     };
 const [staffName, setStaffName] = useState("")
+
+
     const handleStaffChange = (event, appointmentId) => {
         setStaffName(event.target.value)
         const newStaffName = event.target.value;
@@ -74,7 +76,12 @@ const [staffName, setStaffName] = useState("")
 
     const handleFilter = () => {
         const queryParams = new URLSearchParams();
+
         if (filterDate) queryParams.append('date', filterDate);
+        if (staffName) queryParams.append('staff', staffName);
+
+        console.log(queryParams)
+
         navigate(`/admin/appointments?${queryParams.toString()}`);
     };
 
@@ -315,7 +322,7 @@ const [staffName, setStaffName] = useState("")
                             </select>
                         
                             <input type="date" onChange={handleFilterDateChange} value={filterDate} />
-                            <button onClick={handleFilter}>Filtrează</button>
+                            <button onClick={handleFilter}>Filtreaza</button>
                         </th>
                         
                     </tr>

@@ -73,7 +73,7 @@ const DatePiclek = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
                 service: user_service,
             };
             try {
-                const response = await fetch('http://localhost:3000/api/appointments/create', {
+                const response = await fetch('https://estyllo.onrender.com:3000/api/appointments/create', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(appointment),
