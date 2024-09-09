@@ -45,6 +45,36 @@
     flex-wrap: wrap;
 
 }
+
+#preturi div.prices.pachete{
+    flex-direction: column;
+}
+
+#preturi div.prices.pachete h1{
+    margin-left: 20px;
+    margin-bottom: 30px;
+    font-family: Inter-Black;
+    font-size: 1.9rem;
+
+}
+
+#preturi div.prices.pachete .prices{
+    padding: 0;
+}
+
+#preturi div.prices span{
+    font-weight: 700;
+    font-family: Inter-med;
+
+}
+#preturi div.prices.pachete span{
+    color: #000;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: Inter-med;
+    text-align: center;
+}
+
 #preturi .prices .service{
     background-color: #fff;
     margin: 10px 20px;
@@ -60,7 +90,7 @@
     font-size: 1.2rem;
     font-family: Inter-med;
     color: #B30031;
-    margin-bottom: 17px;
+    /* margin-bottom: 17px; */
     align-self: center;
 }
 
@@ -71,9 +101,18 @@
     justify-content: space-between;
 }
 
+
+#preturi .prices .service ul{
+    margin-top: 17px;
+}
 #preturi .prices .service ul li strong{
     max-width: 60%;
     text-transform: capitalize;
+}
+
+#preturi .prices h1{
+    color: #B30031;
+
 }
 
 

@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllServices, getCoaforPrices, getFrizeriePrices, getManipediPrices, getVopsitPrices, getCosmeticaFemeiPrices, getCosmeticaBarbatiPrices,getGeneralPrices } from '../controllers/services.controller.js';
+import { getAllServices, getCoaforPrices, getFrizeriePrices, getManipediPrices, getVopsitPrices,getVopsitPachete, getCosmeticaFemeiPrices, getCosmeticaBarbatiPrices,getVopsitPacheteFara,getGeneralPrices } from '../controllers/services.controller.js';
 
 
 const preturiRouter = express.Router();
@@ -11,6 +11,8 @@ preturiRouter.get('/manipedi', getManipediPrices);
 preturiRouter.get('/vopsit', getVopsitPrices);
 preturiRouter.get('/cosmeticafemei', getCosmeticaFemeiPrices);
 preturiRouter.get('/cosmeticabarbati', getCosmeticaBarbatiPrices);
+preturiRouter.get('/vopsit/pachete-fara', getVopsitPacheteFara);
+preturiRouter.get('/vopsit/pachete', getVopsitPachete);
 
 
 preturiRouter.get('/general', getGeneralPrices);

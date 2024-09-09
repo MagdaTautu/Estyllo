@@ -69,6 +69,31 @@ export const getVopsitPrices = async (req, res, next) => {
       res.json(results);
     });
   };
+
+  export const getVopsitPacheteFara = async (req, res, next) => {
+    const db = req.app.get('db');
+    const query = "SELECT * FROM vopsit_femei WHERE tip = 'pachet-fara'";
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error("Error executing query:", err.message);
+        res.status(500).json({ success: false, message: err.message, error: err.message });
+        return;
+      }
+      res.json(results);
+    });
+  };
+  export const getVopsitPachete= async (req, res, next) => {
+    const db = req.app.get('db');
+    const query = "SELECT * FROM vopsit_femei WHERE tip = 'pachet'";
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error("Error executing query:", err.message);
+        res.status(500).json({ success: false, message: err.message, error: err.message });
+        return;
+      }
+      res.json(results);
+    });
+  };
   
 
 export const getCosmeticaFemeiPrices = async (req, res, next) => {
