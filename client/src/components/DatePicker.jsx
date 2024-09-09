@@ -109,7 +109,6 @@ const DatePiclek = ({ highlightedDates, selectedPersonal, setNextPage, selectedS
         }
         setUserService(selectedService);
     };
-    console.log(user_name)
 
     return (
         <div id='slider' className='slider2'>

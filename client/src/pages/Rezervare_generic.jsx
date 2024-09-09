@@ -121,7 +121,7 @@ function Rezervare_generic() {
     else 
     setNextPage(false)
   }
-
+console.log(currentIndex)
   const nextPage = () => {
     window.scrollTo({
       top: 0,
@@ -130,7 +130,7 @@ function Rezervare_generic() {
     if(currentIndex === 2)
       setCurrentIndex(0)
     else{
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % 3);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % 2);
       services.forEach((serviceObj) => {
         fetchPersonal(serviceObj.type);
       });
@@ -237,7 +237,7 @@ function Rezervare_generic() {
           <button className={`next ${nextPageVar === true  ? "active" : "inactive"} ${currentIndex === 3  ? "none" : ""}`} id="next" onClick={nextPage}  >
             
             {
-             currentIndex === 2 ? " Finalizare" : "Continua"
+             currentIndex === 1 ? " Finalizare" : "Continua"
             }
             
           </button>
