@@ -60,6 +60,6 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
 
-app.listen(443, () => {
-    console.log("Server is running on port 443!!!");
+app.listen(3000, () => {
+    console.log("Server is running on port 3000!!!");
 });
