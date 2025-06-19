@@ -39,11 +39,11 @@ function Rezervare_generic() {
         setPricesFrizerie(data);
         setActiveFrizerieIndex(null);
       }
-      else if (service_name === "cosmetica_femei") {
+      else if (service_name === "cosmetica") {
         setPricesCosmeticaFemei(data);
         setActiveCosmeticaFemei(null);
       }
-      else if (service_name === "mani_pedi") {
+      else if (service_name === "mani-pedi") {
         setPricesManichiura(data);
         setActiveManiIndex(null);
       }
@@ -83,13 +83,13 @@ function Rezervare_generic() {
     else if (service === "frizerie")
       setActiveFrizerieIndex(index)
 
-    else if (service === "cosmetica_femei")
+    else if (service === "cosmetica")
       setActiveCosmeticaFemei(index);
     
     else if (service === "cosmetica_barbati")
       setActiveCosmeticaBarbati(index);
  
-    else if (service === "mani_pedi")
+    else if (service === "mani-pedi")
     {
       setActiveManiIndex(index);
 
@@ -205,8 +205,8 @@ console.log(currentIndex)
   useEffect(() => {
     fetchPrices("coafor_femei");
     fetchPrices("frizerie");
-    fetchPrices("cosmetica_femei");
-    fetchPrices("mani_pedi");
+    fetchPrices("cosmetica");
+    fetchPrices("mani-pedi");
   }, []);
   useEffect(() => {
     
@@ -264,9 +264,9 @@ console.log(currentIndex)
               </li>
               <li
                 className={`nav-item ${
-                  activeNav === "cosmetica_femei" ? "active" : ""
+                  activeNav === "cosmetica" ? "active" : ""
                 }`}
-                onClick={() => handleNavClick("cosmetica_femei")}
+                onClick={() => handleNavClick("cosmetica")}
               >
                 Cosmetica Femei
               </li>
@@ -279,8 +279,8 @@ console.log(currentIndex)
                 Cosmetica Barbati
               </li>
               <li
-                className={`nav-item ${activeNav === "mani_pedi" ? "active" : ""}`}
-                onClick={() => handleNavClick("mani_pedi")}
+                className={`nav-item ${activeNav === "mani-pedi" ? "active" : ""}`}
+                onClick={() => handleNavClick("mani-pedi")}
               >
                 Manichiura si pedichiura
               </li>
@@ -369,7 +369,7 @@ console.log(currentIndex)
                 ))}
               </ul>
             </div>
-            <div id="cosmetica_femei">
+            <div id="cosmetica">
               <p className="title">Cosmetica Femei</p>
               <ul className="prices">
                 {pricesCosmeticaFemei.map((priceObj, index) => (
@@ -411,7 +411,7 @@ console.log(currentIndex)
                 ))}
               </ul>
             </div>
-            <div id="mani_pedi">
+            <div id="mani-pedi">
               <p className="title">Manichiura si Pedichiura</p>
               <ul className="prices">
                 {pricesManichiura.map((priceObj, index) => (
@@ -427,12 +427,12 @@ console.log(currentIndex)
                         index,
                         priceObj.serviciu,
                         priceObj.pret,
-                        "mani_pedi"
+                        "mani-pedi"
                       );
-                      handleSetTypes("mani_pedi");
+                      handleSetTypes("mani-pedi");
                       handleSetService(priceObj.serviciu)
                     }}
-                    value="mani_pedi"
+                    value="mani-pedi"
                   >
                     <div>
                       <div className="checkbox">

@@ -43,7 +43,7 @@ function Rezervare() {
         setPricesCosmeticaFemei(data);
         setActiveCosmeticaFemei(null);
       }
-      else if (service_name === "mani_pedi") {
+      else if (service_name === "mani-pedi") {
         setPricesManichiura(data);
         setActiveManiIndex(null);
       }
@@ -90,7 +90,7 @@ function Rezervare() {
     else if (service === "cosmetica_barbati")
       setActiveCosmeticaBarbati(index);
  
-    else if (service === "mani_pedi")
+    else if (service === "mani-pedi")
     {
       console.log(service)
       setActiveManiIndex(index);
@@ -208,7 +208,7 @@ function Rezervare() {
     fetchPrices("coafor_femei");
     fetchPrices("frizerie");
     fetchPrices("cosmetica_femei");
-    fetchPrices("mani_pedi");
+    fetchPrices("mani-pedi");
   }, []);
   useEffect(() => {
     
@@ -281,8 +281,8 @@ function Rezervare() {
                 Cosmetica Barbati
               </li>
               <li
-                className={`nav-item ${activeNav === "mani_pedi" ? "active" : ""}`}
-                onClick={() => handleNavClick("mani_pedi")}
+                className={`nav-item ${activeNav === "mani-pedi" ? "active" : ""}`}
+                onClick={() => handleNavClick("mani-pedi")}
               >
                 Manichiura si pedichiura
               </li>
@@ -413,7 +413,7 @@ function Rezervare() {
                 ))}
               </ul>
             </div>
-            <div id="mani_pedi">
+            <div id="mani-pedi">
               <p className="title">Manichiura si Pedichiura</p>
               <ul className="prices">
                 {pricesManichiura.map((priceObj, index) => (
@@ -429,12 +429,12 @@ function Rezervare() {
                         index,
                         priceObj.serviciu,
                         priceObj.pret,
-                        "mani_pedi"
+                        "mani-pedi"
                       );
-                      handleSetTypes("mani_pedi");
+                      handleSetTypes("mani-pedi");
                       handleSetService(priceObj.serviciu)
                     }}
-                    value="mani_pedi"
+                    value="mani-pedi"
                   >
                     <div>
                       <div className="checkbox">
@@ -502,9 +502,9 @@ function Rezervare() {
               ))}
             </ul>
             
-            {personal.mani_pedi?.length>0 ? <h1>Manichiura si Pedichiura</h1> : ""}
+            {personal.mani-pedi?.length>0 ? <h1>Manichiura si Pedichiura</h1> : ""}
             <ul className="prices">
-              {personal.mani_pedi?.map((pers, index) => (
+              {personal.mani-pedi?.map((pers, index) => (
                 <li
                   key={index}
                   onClick={() => handlePersonalClick(pers)}

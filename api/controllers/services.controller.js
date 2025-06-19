@@ -205,7 +205,7 @@ export const getVopsitPrices = async (req, res, next) => {
 
 export const getCosmeticaFemeiPrices = async (req, res, next) => {
     const db = req.app.get('db');
-    const query = "SELECT serviciu, pret FROM cosmetica_femei";
+    const query = "SELECT serviciu, pret FROM cosmetica";
     db.query(query, (err, results) => {
         if (err) {
             console.error("Error executing query:", err.message);
