@@ -9,21 +9,46 @@ function Preturi() {
   const [pricesDecapaj, setpricesDecapaj] = useState([]);
   const [pricesCoafat, setPricesCoafat] = useState([]);
   const [pricesCreponat, setPricesCreponat] = useState([]);
+  const [pricesAfro, setPricesAfro] = useState([]);
   const [pricesOcazie, setPricesOcazie] = useState([]);
   const [pricesExtensii, setPricesExtensii] = useState([]);
+  const [pricesSuviteVopsea, setPricesSuviteVopsea] = useState([]);
   const [pachetVopsit, setPachetVopsit] = useState([]);
   const [pachetVopsitFara, setPachetVopsitFara] = useState([]);
   const [pricesDecolorat, setPricesDecolorat] = useState([]);
   const [pachetDecolorat, setPachetDecolorat] = useState([]);
   const [pricesCosmeticaFemei, setPricesCosmeticaFemei] = useState([]);
+  const [pricesCosmeticaBarbati, setPricesCosmeticaBarbati] = useState([]);
   const [preturiSuvitePudra, setPreturiSuvitePudra] = useState([]);
   const [preturiSuviteBaza, setPreturiSuviteBaza] = useState([]);
+  const [preturi, setPreturi] = useState([]);
 
   const [error, setError] = useState(null);
 
+  const fetchPrices = async (url, setPrices) => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+  
+      if (Array.isArray(data)) {
+        setPrices(data);
+      } else {
+        console.error("Expected array but got:", data);
+        setPrices([]); 
+      }
+    } catch (error) {
+      console.error("Error fetching prices:", error.message);
+      setError(error.message);
+      setPrices([]);  
+    }
+  };
+
   const fetchPreturi = async (table, tip, setPrices) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/preturi/preturiGenerale?table=${table}&tip=${tip}`);
+      const response = await fetch(`https://estyllo.onrender.com:443/api/preturi/preturiGenerale?table=${table}&tip=${tip}`);
       const data = await response.json();
       if (Array.isArray(data)) {
         setPrices(data);
@@ -31,18 +56,13 @@ function Preturi() {
       } else {
         console.error("Expected array but got:", data);
         setPrices([]);
-        setError(error)
-
       }
     } catch (error) {
       console.error("Error fetching prices:", error);
-      setError(error)
       setPrices([]);
     }
   };
 
-
-  
   
 
 
