@@ -68,7 +68,7 @@ function Preturi() {
 
   useEffect(() => {
     fetchPreturi("frizerie", "frizerie", setPricesFrizerie);
-    fetchPreturi("mani-pedi", "mani_pedi", setPricesManiPedi);
+    fetchPreturi("mani-pedi", "mani-pedi", setPricesManiPedi);
     fetchPreturi("cosmetica", "cosmetica", setPricesCosmeticaFemei);
     fetchPreturi("coafor_femei", "extensii", setPricesExtensii);
     fetchPreturi("coafor_femei", "creponat", setPricesCreponat);
