@@ -41,7 +41,7 @@
 #preturi div.prices{
     padding: 50px 40px;
     display: flex;
-    min-height: 90vh;
+    min-height: 50vh;
     flex-wrap: wrap;
 
 }
@@ -79,6 +79,7 @@
     background-color: #fff;
     margin: 10px 20px;
     min-width: 350px;
+    width: 400px;
     padding: 30px;
     display: flex;
     flex-direction: column;

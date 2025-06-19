@@ -252,3 +252,32 @@ export const getGeneralPrices = async (req, res, next) => {
         res.json(results);
     });
 };
+
+
+export const getPricesByTipAndTable = async (req, res, next) => {
+  const db = req.app.get('db');
+  const tip = req.query.tip;
+  const table = req.query.table;
+
+  if (!table) {
+    res.status(400).send("Table is required");
+    return;
+  }
+
+  const query = tip === 'null'
+    ? `SELECT serviciu, pret FROM ?? WHERE tip IS NULL`
+    : `SELECT serviciu, pret FROM ?? WHERE tip = ?`;
+
+  const values = tip === 'null'
+    ? [table]
+    : [table, tip];
+
+  db.query(query, values, (err, results) => {
+    if (err) {
+      console.error("Error executing query:", err.message);
+      res.status(500).json({ success: false, message: 'Server error' });
+      return;
+    }
+    res.json(results);
+  });
+};

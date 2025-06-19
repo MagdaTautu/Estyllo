@@ -6,225 +6,66 @@ function Preturi() {
   const [pricesCoafor, setPricesCoafor] = useState([]);
   const [pricesFrizerie, setPricesFrizerie] = useState([]);
   const [pricesManiPedi, setPricesManiPedi] = useState([]);
-  const [pricesVopsit, setPricesVopsit] = useState([]);
+  const [pricesDecapaj, setpricesDecapaj] = useState([]);
   const [pricesCoafat, setPricesCoafat] = useState([]);
   const [pricesCreponat, setPricesCreponat] = useState([]);
-  const [pricesAfro, setPricesAfro] = useState([]);
   const [pricesOcazie, setPricesOcazie] = useState([]);
-  const [pricesSuvite, setPricesSuvite] = useState([]);
-  const [pricesSuviteVopsea, setPricesSuviteVopsea] = useState([]);
+  const [pricesExtensii, setPricesExtensii] = useState([]);
   const [pachetVopsit, setPachetVopsit] = useState([]);
   const [pachetVopsitFara, setPachetVopsitFara] = useState([]);
   const [pricesDecolorat, setPricesDecolorat] = useState([]);
   const [pachetDecolorat, setPachetDecolorat] = useState([]);
   const [pricesCosmeticaFemei, setPricesCosmeticaFemei] = useState([]);
-  const [pricesCosmeticaBarbati, setPricesCosmeticaBarbati] = useState([]);
+  const [preturiSuvitePudra, setPreturiSuvitePudra] = useState([]);
+  const [preturiSuviteBaza, setPreturiSuviteBaza] = useState([]);
 
   const [error, setError] = useState(null);
 
-  const fetchPrices = async (url, setPrices) => {
+  const fetchPreturi = async (table, tip, setPrices) => {
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+      const response = await fetch(`http://localhost:3000/api/preturi/preturiGenerale?table=${table}&tip=${tip}`);
       const data = await response.json();
-  
-      // Ensure data is an array before setting state
       if (Array.isArray(data)) {
         setPrices(data);
+        console.log(table, tip)
       } else {
         console.error("Expected array but got:", data);
-        setPrices([]);  // Set an empty array if the response is not as expected
+        setPrices([]);
+        setError(error)
+
       }
     } catch (error) {
-      console.error("Error fetching prices:", error.message);
-      setError(error.message);
-      setPrices([]);  // Set an empty array in case of an error
+      console.error("Error fetching prices:", error);
+      setError(error)
+      setPrices([]);
     }
   };
 
-  const fetchCoaforPrices = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/coafor');
-      const data = await response.json();
-      setPricesCoafor(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
-  const fetchCreponatPrices = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/creponat');
-      const data = await response.json();
-      setPricesCreponat(data)
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
-  const fetchAfroPrices = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/afro');
-      const data = await response.json();
-      setPricesAfro(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
-  const fetchCoafatPrices = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/coafat');
-      const data = await response.json();
-      setPricesCoafat(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
-  const fetchCoafatOcazie = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/ocazie');
-      const data = await response.json();
-      setPricesOcazie(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
-
-  const fetchFrizeriePrices = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/frizerie');
-      const data = await response.json();
-      setPricesFrizerie(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
-
-  const fetchManiPediPrices = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/manipedi');
-      const data = await response.json();
-      setPricesManiPedi(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
-  const fetchSuvite = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/suvite');
-      const data = await response.json();
-      setPricesSuvite(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
-  const fetchSuviteVopsea = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/suvitevopsea');
-      const data = await response.json();
-      setPricesSuviteVopsea(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
-  
-  const fetchVopsitPrices = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/vopsit');
-      const data = await response.json();
-      setPricesVopsit(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
-
-  const fetchVopsitPachete = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/vopsit/pachete-fara');
-      const data = await response.json();
-      
-      setPachetVopsit(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/vopsit/pachete');
-      const data = await response.json();
-      console.log(data)
-      setPachetVopsitFara(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
-
-  const fetchDecoloratPrices = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/decolorat');
-      const data = await response.json();
-      setPricesDecolorat(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
-
-  const fetchDecoloratPachete = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/decolorat/pachete');
-      const data = await response.json();
-      
-      setPachetDecolorat(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/vopsit/pachete');
-      const data = await response.json();
-      console.log(data)
-      setPachetVopsitFara(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
 
   
-  const fetchCosmeticaFemeiPrices = async () => {
-    try {
-      const response = await fetch('https://estyllo.onrender.com:443/api/preturi/cosmeticafemei');
-      const data = await response.json();
-      setPricesCosmeticaFemei(data);
-    } catch (error) {
-      console.error("Error fetching prices:", error);
-    }
-  };
-
   
-    const fetchCosmeticaBarbatiPrices = async () => {
-      try {
-        const response = await fetch('https://estyllo.onrender.com:443/api/preturi/cosmeticabarbati');
-        const data = await response.json();
-        setPricesCosmeticaBarbati(data);
-      } catch (error) {
-        console.error("Error fetching prices:", error);
-      }
-    };
+
 
   useEffect(() => {
-    fetchCoaforPrices();
-    fetchFrizeriePrices();
-    fetchManiPediPrices();
-    fetchVopsitPrices();
-    fetchCosmeticaFemeiPrices();
-    fetchCosmeticaBarbatiPrices();
-    fetchVopsitPachete();
-    fetchDecoloratPachete();
-    fetchDecoloratPrices();
-    fetchCoafatPrices();
-    fetchAfroPrices();
-    fetchCreponatPrices();
-    fetchCoafatOcazie();
-    fetchSuviteVopsea();
-    fetchSuvite();
+    fetchPreturi("frizerie", "frizerie", setPricesFrizerie);
+    fetchPreturi("mani-pedi", "mani_pedi", setPricesManiPedi);
+    fetchPreturi("cosmetica", "cosmetica", setPricesCosmeticaFemei);
+    fetchPreturi("coafor_femei", "extensii", setPricesExtensii);
+    fetchPreturi("coafor_femei", "creponat", setPricesCreponat);
+    fetchPreturi("coafor_femei", "ocazie", setPricesOcazie);
+    fetchPreturi("coafor_femei", "coafat", setPricesCoafat);
+    fetchPreturi("coafor_femei", "coafor", setPricesCoafor);
+    fetchPreturi("vopsit_femei", "suvite_pudra", setPreturiSuvitePudra);
+    fetchPreturi("vopsit_femei", "suvite_baza", setPreturiSuviteBaza);
+    fetchPreturi("vopsit_femei", "pachet", setPachetVopsit);
+    fetchPreturi("vopsit_femei", "pachet_fara", setPachetVopsitFara);
+    fetchPreturi("vopsit_femei", "pachet_decolorat", setPachetDecolorat);
+    fetchPreturi("vopsit_femei", "decapaj", setpricesDecapaj);
+    fetchPreturi("vopsit_femei", "decolorat", setPricesDecolorat);
+   
+
   }, []);
+  console.log(preturiSuvitePudra)
   return (
     <div id="preturi">
       <div className="header">
@@ -254,7 +95,10 @@ function Preturi() {
             )}
           </ul>
 
-          <p className="title">Coafat</p>
+          
+        </div>
+        <div className="service">
+        <p className="title">Coafat</p>
           <ul className='prices'>
             {Array.isArray(pricesCoafat) && pricesCoafat.length === 0 ? (
               <li className='item'>No prices available</li>
@@ -284,20 +128,7 @@ function Preturi() {
             )}
           </ul>
 
-          <p className="title">Afro</p>
-          <ul className='prices'>
-            {Array.isArray(pricesAfro) && pricesAfro.length === 0 ? (
-              <li className='item'>No prices available</li>
-            ) : Array.isArray(pricesAfro) ? (
-              pricesAfro.map((price, index) => (
-                <li key={index} className='item'>
-                  <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
-                </li>
-              ))
-            ) : (
-              <li className='item'>Invalid data received. Please refresh the page</li>
-            )}
-          </ul>
+        
 
           <p className="title">Creponat Radacini</p>
           <ul className='prices'>
@@ -347,12 +178,12 @@ function Preturi() {
           </ul>
         </div>
         <div className="service">
-          <p className="title">Vopsit + Manopera</p>
+          <p className="title">Decapaj</p>
           <ul className='prices'>
-            {Array.isArray(pricesVopsit) && pricesVopsit.length === 0 ? (
+            {Array.isArray(pricesDecapaj) && pricesDecapaj.length === 0 ? (
               <li className='item'>No prices available</li>
-            ) : Array.isArray(pricesVopsit) ? (
-              pricesVopsit.map((price, index) => (
+            ) : Array.isArray(pricesDecapaj) ? (
+              pricesDecapaj.map((price, index) => (
                 <li key={index} className='item'>
                   <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
                 </li>
@@ -361,12 +192,13 @@ function Preturi() {
               <li className='item'>Invalid data received. Please refresh the page</li>
             )}
           </ul>
-          <p className="title">Decolorat suvite</p>
+
+          <p className="title">SUVITE PUDRA+VOPSEA (DOAR SUVITE)</p>
           <ul className='prices'>
-            {Array.isArray(pricesSuvite) && pricesSuvite.length === 0 ? (
+            {Array.isArray(preturiSuvitePudra) && preturiSuvitePudra.length === 0 ? (
               <li className='item'>No prices available</li>
-            ) : Array.isArray(pricesSuvite) ? (
-              pricesSuvite.map((price, index) => (
+            ) : Array.isArray(preturiSuvitePudra) ? (
+              preturiSuvitePudra.map((price, index) => (
                 <li key={index} className='item'>
                   <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
                 </li>
@@ -375,12 +207,42 @@ function Preturi() {
               <li className='item'>Invalid data received. Please refresh the page</li>
             )}
           </ul>
-          <p className="title">Decolorat Suvite + Vopsea</p>
+
+          <p className="title">SUVITE PUDRA + VOPSEA +VOPSIT BAZA</p>
           <ul className='prices'>
-            {Array.isArray(pricesSuviteVopsea) && pricesSuviteVopsea.length === 0 ? (
+            {Array.isArray(preturiSuviteBaza) && preturiSuviteBaza.length === 0 ? (
               <li className='item'>No prices available</li>
-            ) : Array.isArray(pricesSuviteVopsea) ? (
-              pricesSuviteVopsea.map((price, index) => (
+            ) : Array.isArray(preturiSuviteBaza) ? (
+              preturiSuviteBaza.map((price, index) => (
+                <li key={index} className='item'>
+                  <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
+                </li>
+              ))
+            ) : (
+              <li className='item'>Invalid data received. Please refresh the page</li>
+            )}
+          </ul>
+
+          <p className="title">Decolorat</p>
+          <ul className='prices'>
+            {Array.isArray(pricesDecolorat) && pricesDecolorat.length === 0 ? (
+              <li className='item'>No prices available</li>
+            ) : Array.isArray(pricesDecolorat) ? (
+              pricesDecolorat.map((price, index) => (
+                <li key={index} className='item'>
+                  <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
+                </li>
+              ))
+            ) : (
+              <li className='item'>Invalid data received. Please refresh the page</li>
+            )}
+          </ul>
+          <p className="title">Extensii par natural</p>
+          <ul className='prices'>
+            {Array.isArray(pricesExtensii) && pricesExtensii.length === 0 ? (
+              <li className='item'>No prices available</li>
+            ) : Array.isArray(pricesExtensii) ? (
+              pricesExtensii.map((price, index) => (
                 <li key={index} className='item'>
                   <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
                 </li>
@@ -406,22 +268,22 @@ function Preturi() {
               )}
             </ul>
         </div>
-        <div className="service">
-          <p className="title">Cosmetica barbati</p>
-          <ul className='prices'>
-            {Array.isArray(pricesCosmeticaBarbati) && pricesCosmeticaBarbati.length === 0 ? (
-              <li className='item'>No prices available</li>
-            ) : Array.isArray(pricesCosmeticaBarbati) ? (
-              pricesCosmeticaBarbati.map((price, index) => (
-                <li key={index} className='item'>
-                  <strong>{price.serviciu}</strong><span> {price.pret} RON</span>
-                </li>
-              ))
-            ) : (
-              <li className='item'>Invalid data received. Please refresh the page</li>
-            )}
-          </ul>
-        </div>
+        {/* <div className="service"> */}
+          {/* <p className="title">Cosmetica barbati</p> */}
+          {/* <ul className='prices'> */}
+            {/* {Array.isArray(pricesCosmeticaBarbati) && pricesCosmeticaBarbati.length === 0 ? ( */}
+              {/* <li className='item'>No prices available</li> */}
+            {/* ) : Array.isArray(pricesCosmeticaBarbati) ? ( */}
+              {/* pricesCosmeticaBarbati.map((price, index) => ( */}
+                {/* <li key={index} className='item'> */}
+                  {/* <strong>{price.serviciu}</strong><span> {price.pret} RON</span> */}
+                {/* </li> */}
+              {/* )) */}
+            {/* ) : ( */}
+              {/* <li className='item'>Invalid data received. Please refresh the page</li> */}
+            {/* )} */}
+          {/* </ul> */}
+        {/* </div> */}
       </div>
         <div className="prices pachete">
           <h1>PACHETE</h1>

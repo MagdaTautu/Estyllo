@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllServices, getCoaforPrices, getFrizeriePrices,getSuviteVopseaPrices,getSuvitePrices, getCreponatPrices,getOcaziePrices,getCoafatPrices,getAfroPrices, getManipediPrices,getDecoloratPrices,getDecoloratPachete, getVopsitPrices,getVopsitPachete, getCosmeticaFemeiPrices, getCosmeticaBarbatiPrices,getVopsitPacheteFara,getGeneralPrices } from '../controllers/services.controller.js';
+import { getAllServices, getCoaforPrices, getPricesByTipAndTable,getFrizeriePrices,getSuviteVopseaPrices,getSuvitePrices, getCreponatPrices,getOcaziePrices,getCoafatPrices,getAfroPrices, getManipediPrices,getDecoloratPrices,getDecoloratPachete, getVopsitPrices,getVopsitPachete, getCosmeticaFemeiPrices, getCosmeticaBarbatiPrices,getVopsitPacheteFara,getGeneralPrices } from '../controllers/services.controller.js';
 
 
 const preturiRouter = express.Router();
@@ -21,6 +21,9 @@ preturiRouter.get('/vopsit/pachete-fara', getVopsitPacheteFara);
 preturiRouter.get('/vopsit/pachete', getVopsitPachete);
 preturiRouter.get('/decolorat/pachete', getDecoloratPachete);
 preturiRouter.get('/decolorat/pachete', getDecoloratPrices);
+//
+preturiRouter.get('/preturiGenerale', getPricesByTipAndTable);
+//
 
 
 preturiRouter.get('/general', getGeneralPrices);
