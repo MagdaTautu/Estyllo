@@ -101,7 +101,7 @@ export const getFrizeriePrices = async (req, res, next) => {
 
 export const getManipediPrices = async (req, res, next) => {
     const db = req.app.get('db');
-    const query = "SELECT serviciu, pret FROM mani_pedi";
+    const query = "SELECT serviciu, pret FROM mani-pedi";
     db.query(query, (err, results) => {
         if (err) {
             console.error("Error executing query:", err.message);

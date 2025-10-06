@@ -33,8 +33,7 @@ function Home() {
         <img src={logo} alt="" className='logo' />
         <div className="bottom">
           <div className="socials">
-            <img src={fb} alt="" />
-            <img src={insta} alt="" />
+            <a href="https://www.facebook.com/p/Estyllo-Beauty-Salon-61564819026787/"> <img src={fb} alt="" /></a>
           </div>
           <div className="buttons">
             <Link to={"/rezervare"}>

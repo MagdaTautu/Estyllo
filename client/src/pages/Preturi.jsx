@@ -309,7 +309,7 @@ function Preturi() {
           <h1>PACHETE</h1>
           <div className="prices">
             <div className="service">
-              <p className="title"> Vopsit + Spalat + Tuns + Uscat</p>
+              <p className="title"> Vopsit + Spalat + Tuns + Coafat</p>
               <ul className='prices'>
                 {Array.isArray(pachetVopsit) && pachetVopsit.length === 0 ? (
                   <li className='item'>No prices available</li>
@@ -324,7 +324,7 @@ function Preturi() {
                 )}
               </ul>
               
-              <p className="title">Vopsit + Spalat + Tuns + Uscat</p>
+              <p className="title">Vopsit + Spalat + Tuns + Coafat</p>
               <span>(*cu vopseaua clientei)</span>
               <ul className='prices'>
                 {Array.isArray(pachetVopsitFara) && pachetVopsitFara.length === 0 ? (
